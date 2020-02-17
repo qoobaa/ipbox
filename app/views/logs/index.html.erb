@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2>
+        <%= link_to "Commits", logs_path %>
+      </h2>
+    </div>
+    <%= search_form_for @q, url: logs_path, method: :get, remote: true, class: "col" do |form| %>
+      <div class="form-row">
+        <div class="col">
+          <%= form.search_field :message_cont, class: "form-control", placeholder: "Search…", autocomplete: "off" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= render "table" %>
+</div>

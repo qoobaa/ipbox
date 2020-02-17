@@ -1,0 +1,31 @@
+<tr id="entry-<%= entry.id %>">
+  <td>
+    <%= entry.committed_at.to_date %>
+  </td>
+  <td>
+    <%= entry.message %>
+  </td>
+  <td class="text-center">
+    <% if entry.development? %>
+      <%= link_to "development", log_path(entry), class: "badge badge-success", data: {method: :patch, remote: true, params: "entry[type]=maintenance"} %>
+    <% end %>
+    <% if entry.maintenance? %>
+      <%= link_to "maintenance", log_path(entry), class: "badge badge-secondary", data: {method: :patch, remote: true, params: "entry[type]=development"} %>
+    <% end %>
+  </td>
+  <td class="text-center" data-controller="entry-duration">
+    <%= form_for entry, url: log_path(entry), data: {remote: true, target: "entry-duration.form"}, html: {class: "d-none"} do |form| %>
+      <div class="input-group input-group-sm">
+        <%= form.number_field :duration, min: 0, max: 8, step: 0.5, autocomplete: "off", class: "form-control", data: {target: "entry-duration.input"}%>
+        <div class="input-group-append">
+          <%= form.submit "✔", class: "btn btn-success" %>
+          <%= button_tag "✗", type: "button", class: "btn btn-danger", data: {action: "entry-duration#cancel"} %>
+        </div>
+      </div>
+    <% end %>
+    <%= link_to "#{entry.duration}h", "javascript:void(0)", data: {action: "entry-duration#edit", target: "entry-duration.link"} %>
+  </td>
+  <td class="text-right">
+    <%= number_to_currency(entry.duration * 62.5) %>
+  </td>
+</tr>
