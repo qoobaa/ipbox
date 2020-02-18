@@ -6,6 +6,7 @@ class Entry < ApplicationRecord
   belongs_to :repository
 
   validates :sha, uniqueness: {scope: :invoice_id}
+  validates :manual, inclusion: {in: [true, false]}
 
   def self.unassigned
     where(invoice_id: nil)

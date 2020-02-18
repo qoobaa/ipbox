@@ -11,7 +11,7 @@
 </p>
 
 <code>
-git log --author kuba@kubakuzma.com --after='2019-01-01 00:00:00' --before='2019-12-31 23:59:59' --pretty='format:%H %aI %s' | curl -X POST <%= import_repository_url(@repository) %> --data-binary @-
+git log --author kuba@kubakuzma.com --no-merges --after='2019-01-01 00:00:00' --before='2019-12-31 23:59:59' --pretty='format:%H %aI %s' | curl -X POST <%= import_repository_url(@repository) %> --data-binary @-
 </code>
 
 <div class="my-3" data-controller="imports" data-imports-repository-id="<%= @repository.id %>">
@@ -27,7 +27,7 @@ git log --author kuba@kubakuzma.com --after='2019-01-01 00:00:00' --before='2019
       Successfully imported <span data-target="imports.entries">0</span> entries.
     </p>
     <p>
-      <%= link_to "Browse entries", entries_path, class: "btn btn-success" %>
+      <%= link_to "Browse entries", entries_path(q: {repository_id_eq: @repository.id}), class: "btn btn-success" %>
     </p>
   </div>
 </div>

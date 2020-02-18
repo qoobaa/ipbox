@@ -22,6 +22,7 @@
   <td class="text-center" data-controller="entry-hours">
     <%= form_for entry, url: entry_path(entry), data: {remote: true, target: "entry-hours.form"}, html: {class: "d-none"} do |form| %>
       <div class="input-group input-group-sm">
+        <%= form.hidden_field :manual, value: true %>
         <%= form.number_field :hours, min: 0, max: 8, step: 0.5, autocomplete: "off", class: "form-control", data: {target: "entry-hours.input"}%>
         <div class="input-group-append">
           <%= form.submit "✔", class: "btn btn-success" %>

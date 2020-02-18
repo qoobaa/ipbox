@@ -9,6 +9,11 @@ class EntriesController < ApplicationController
         .by_year(2019)
   end
 
+  def calculate
+    CalculateHoursJob.perform_now
+    redirect_to entries_path
+  end
+
   def update
     @entry = Entry.find(params[:id])
     @entry.update!(entry_params)
@@ -17,6 +22,6 @@ class EntriesController < ApplicationController
   private
 
   def entry_params
-    params.require(:entry).permit(:type, :hours)
+    params.require(:entry).permit(:type, :hours, :manual)
   end
 end
