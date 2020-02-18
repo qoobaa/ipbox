@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2020_02_18_123817) do
     t.bigint "invoice_id"
     t.string "sha"
     t.bigint "repository_id"
-    t.boolean "manual", default: false
+    t.boolean "manual", default: false, null: false
     t.index ["invoice_id"], name: "index_entries_on_invoice_id"
     t.index ["repository_id"], name: "index_entries_on_repository_id"
     t.index ["sha", "repository_id"], name: "index_entries_on_sha_and_repository_id", unique: true

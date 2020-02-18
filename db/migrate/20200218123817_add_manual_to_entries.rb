@@ -1,5 +1,5 @@
 class AddManualToEntries < ActiveRecord::Migration[6.0]
   def change
-    add_column :entries, :manual, :boolean, default: false, null: true
+    add_column :entries, :manual, :boolean, default: false, null: false
   end
 end
