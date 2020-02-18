@@ -1,13 +1,14 @@
-class LogsController < ApplicationController
+class EntriesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def index
+    @unassigned_entries = Entry.by_year(2019).unassigned
     @q = Entry.ransack(params[:q])
     @entries =
       @q.result
+        .includes(:invoice)
         .order(committed_at: :asc)
-        .where("committed_at >= '2019-01-01'")
-        .where("committed_at <= '2019-12-31'")
+        .by_year(2019)
   end
 
   def create

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_17_112634) do
+ActiveRecord::Schema.define(version: 2020_02_18_093332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,8 +20,20 @@ ActiveRecord::Schema.define(version: 2020_02_17_112634) do
     t.text "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "duration"
+    t.decimal "hours"
     t.integer "type"
+    t.bigint "invoice_id"
+    t.index ["invoice_id"], name: "index_entries_on_invoice_id"
   end
 
+  create_table "invoices", force: :cascade do |t|
+    t.string "number"
+    t.date "from"
+    t.date "to"
+    t.decimal "hours"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "entries", "invoices"
 end
