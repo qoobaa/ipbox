@@ -1,0 +1,14 @@
+<tr id="invoice-<%= invoice.id %>">
+  <td>
+    <%= invoice.number %>
+  </td>
+  <td class="text-center">
+    <%= invoice.from %> &mdash; <%= invoice.to %>
+  </td>
+  <td class="text-right">
+    <%= invoice.hours %>
+  </td>
+  <td class="text-right">
+    <%= invoice.entries.sum(:hours) %>
+  </td>
+</tr>
