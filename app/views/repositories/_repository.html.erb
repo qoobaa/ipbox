@@ -1,0 +1,11 @@
+<tr id="repository-<%= repository.id %>">
+  <td>
+    <%= repository.name %>
+  </td>
+  <td class="text-center">
+    <%= link_to repository.entries.count, entries_path(q: {repository_id_eq: repository.id}) %>
+  </td>
+  <td class="text-right">
+    <%= link_to "Import Entries", import_repository_path(repository), class: "btn btn-warning btn-sm" %>
+  </td>
+</tr>

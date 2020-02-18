@@ -1,0 +1,33 @@
+<div class="row my-3">
+  <div class="col">
+    <h2>
+      Import Entries
+    </h2>
+  </div>
+</div>
+
+<p>
+  Please execute the following command inside the project's Git repository:
+</p>
+
+<code>
+git log --author kuba@kubakuzma.com --after='2019-01-01 00:00:00' --before='2019-12-31 23:59:59' --pretty='format:%H %aI %s' | curl -X POST <%= import_repository_url(@repository) %> --data-binary @-
+</code>
+
+<div class="my-3" data-controller="imports" data-imports-repository-id="<%= @repository.id %>">
+  <div data-target="imports.awaiting">
+    <%= button_tag class: "btn btn-success", disabled: true do %>
+      <span class="spinner-border spinner-border-sm" role="status"></span>
+      Waiting for entries…
+    <% end %>
+  </div>
+
+  <div data-target="imports.complete" class="d-none">
+    <p>
+      Successfully imported <span data-target="imports.entries">0</span> entries.
+    </p>
+    <p>
+      <%= link_to "Browse entries", entries_path, class: "btn btn-success" %>
+    </p>
+  </div>
+</div>

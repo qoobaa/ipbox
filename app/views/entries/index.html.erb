@@ -13,6 +13,12 @@
   <%= search_form_for @q, url: entries_path, method: :get, remote: true, class: "col" do |form| %>
     <div class="form-row">
       <div class="col">
+        <%= form.collection_select :repository_id_eq, Repository.all, :id, :name, {include_blank: "Any Repository"}, class: "form-control", placeholder: "Search…", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
+      </div>
+      <div class="col">
+        <%= form.collection_select :invoice_id_eq, Invoice.all, :id, :number, {include_blank: "Any Invoice"}, class: "form-control", placeholder: "Search…", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
+      </div>
+      <div class="col">
         <%= form.search_field :message_cont, class: "form-control", placeholder: "Search…", autocomplete: "off" %>
       </div>
     </div>

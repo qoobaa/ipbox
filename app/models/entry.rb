@@ -3,6 +3,9 @@ class Entry < ApplicationRecord
 
   enum type: {development: 1, maintenance: 2}
   belongs_to :invoice, optional: true
+  belongs_to :repository
+
+  validates :sha, uniqueness: {scope: :invoice_id}
 
   def self.unassigned
     where(invoice_id: nil)

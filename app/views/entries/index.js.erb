@@ -1,1 +1,2 @@
-document.getElementById("entries").innerHTML = "<%= j render('table') %>";
+// document.getElementById("entries").innerHTML = "<%= j render('table') %>";
+Turbolinks.visit("<%= url_for(params.to_unsafe_h).html_safe %>");

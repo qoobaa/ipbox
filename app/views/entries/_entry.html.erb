@@ -5,8 +5,11 @@
   <td>
     <%= entry.message %>
   </td>
-  <td>
-    <%= entry.invoice&.number %>
+  <td class="text-center">
+    <%= entry.repository.name %>
+  </td>
+  <td class="text-center">
+    <%= entry.invoice&.number || "<small class='text-muted'>unassigned</small>".html_safe %>
   </td>
   <td class="text-center">
     <% if entry.development? %>

@@ -1,0 +1,19 @@
+<%= form_for repository, remote: true do |form| %>
+  <fieldset>
+    <div class="form-group">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control" %>
+      <%= bootstrap_invalid_feedback_for(form.object, :name) %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :default_type, class: "form-label" %>
+      <%= form.collection_select :default_type, Repository.default_types.to_a, :first, :first, {prompt: true}, class: "form-control" %>
+      <%= bootstrap_invalid_feedback_for(form.object, :default_type) %>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit "Create Repository", class: "btn btn-success" %>
+    </div>
+  </fieldset>
+<% end %>
