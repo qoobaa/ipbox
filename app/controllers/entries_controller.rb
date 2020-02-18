@@ -1,19 +1,12 @@
 class EntriesController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create]
-
   def index
     @unassigned_entries = Entry.by_year(2019).unassigned
     @q = Entry.ransack(params[:q])
     @entries =
       @q.result
-        .includes(:invoice)
+        .includes(:invoice, :repository)
         .order(committed_at: :asc)
         .by_year(2019)
-  end
-
-  def create
-    attributes = request.raw_post.lines.map { |line| [:committed_at, :message].zip(line.chomp.split(" ", 2)).to_h }
-    Entry.create!(attributes)
   end
 
   def update
@@ -24,6 +17,6 @@ class EntriesController < ApplicationController
   private
 
   def entry_params
-    params.require(:entry).permit(:type, :duration)
+    params.require(:entry).permit(:type, :hours)
   end
 end

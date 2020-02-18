@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_18_093332) do
+ActiveRecord::Schema.define(version: 2020_02_18_105947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,11 @@ ActiveRecord::Schema.define(version: 2020_02_18_093332) do
     t.decimal "hours"
     t.integer "type"
     t.bigint "invoice_id"
+    t.string "sha"
+    t.bigint "repository_id"
     t.index ["invoice_id"], name: "index_entries_on_invoice_id"
+    t.index ["repository_id"], name: "index_entries_on_repository_id"
+    t.index ["sha", "repository_id"], name: "index_entries_on_sha_and_repository_id", unique: true
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -35,5 +39,13 @@ ActiveRecord::Schema.define(version: 2020_02_18_093332) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "repositories", force: :cascade do |t|
+    t.string "name"
+    t.integer "default_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   add_foreign_key "entries", "invoices"
+  add_foreign_key "entries", "repositories"
 end

@@ -9,11 +9,13 @@ class CalculateHoursJob < ApplicationJob
 
       next if daily_entries.blank?
 
-      # FIXME: handle the case when previous is nil
       previous_entry = daily_entries.first.previous
 
       [previous_entry, *daily_entries].each_cons(2) do |previous, current|
-        hours = (current.committed_at - previous.committed_at) / 3600.0
+        # handle the case when previous is nil
+        previous_committed_at = previous ? previous.committed_at : DateTime.parse("2019-01-01")
+
+        hours = (current.committed_at - previous_committed_at) / 3600.0
         hours = case hours
                    when (..0.5) then 0.5
                    when (0.5..hours_per_day) then hours.round
