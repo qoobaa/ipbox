@@ -13,6 +13,9 @@
   <%= search_form_for @q, url: entries_path, method: :get, remote: true, class: "col" do |form| %>
     <div class="form-row">
       <div class="col">
+        <%= link_to "Calculate", calculate_entries_path, type: "button", class: "btn btn-warning btn-block", data: {method: :put, disable_with: "Calculating…", remote: true} %>
+      </div>
+      <div class="col">
         <%= form.collection_select :repository_id_eq, Repository.all, :id, :name, {include_blank: "Any Repository"}, class: "form-control", placeholder: "Search…", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
       </div>
       <div class="col">
