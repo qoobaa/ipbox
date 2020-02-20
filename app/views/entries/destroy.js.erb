@@ -1,0 +1,7 @@
+(function () {
+  var entryNode = document.getElementById("entry-<%= @entry.id %>");
+
+  if (entryNode) {
+    entryNode.parentNode.removeChild(entryNode);
+  }
+})()

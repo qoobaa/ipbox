@@ -1,6 +1,6 @@
 <tr id="invoice-<%= invoice.id %>">
   <td>
-    <%= invoice.number %>
+    <%= link_to invoice.number, invoice_path(invoice) %>
   </td>
   <td class="text-center">
     <%= invoice.from %> &mdash; <%= invoice.to %>

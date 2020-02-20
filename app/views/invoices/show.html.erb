@@ -1,0 +1,57 @@
+<div class="row my-3">
+  <div class="col">
+    <h2>
+      Invoice <%= @invoice.number %>
+    </h2>
+  </div>
+</div>
+
+<table class="table table-condensed table-sm" id="entries">
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th class="text-center">Repository</th>
+      <th class="text-center">Type</th>
+      <th class="text-right">Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @invoice.period.each do |day| %>
+      <% entries = @invoice.entries.by_day(day) %>
+      <% if entries.present? %>
+        <tr>
+          <th colspan="4" class="text-center">
+            <%= day %> (<%= day.strftime("%A") %>)
+          </th>
+        </tr>
+        <% entries.each do |entry| %>
+          <tr>
+            <td>
+              <%= entry.message %>
+            </td>
+            <td class="text-center">
+              <%= entry.repository.name %>
+            </td>
+            <td class="text-center">
+              <% if entry.development? %>
+                <%= link_to "development", entry_path(entry), class: "badge badge-success", data: {method: :patch, remote: true, params: "entry[type]=maintenance"} %>
+              <% end %>
+              <% if entry.maintenance? %>
+                <%= link_to "maintenance", entry_path(entry), class: "badge badge-secondary", data: {method: :patch, remote: true, params: "entry[type]=development"} %>
+              <% end %>
+            </td>
+            <td class="text-right">
+              <%= entry.hours %>
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <td colspan="4" class="text-right">
+            Daily total:
+            <%= entries.sum(:hours) %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

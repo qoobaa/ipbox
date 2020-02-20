@@ -31,3 +31,17 @@ git log --author kuba@kubakuzma.com --no-merges --after='2019-01-01 00:00:00' --
     </p>
   </div>
 </div>
+
+<p>
+  or
+</p>
+
+<%= form_for @repository, url: upload_repository_path(@repository), html: {method: :put} do |form| %>
+  <div class="form-group">
+    <%= form.file_field :calendar, class: "form-control-file" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit "Upload", class: "btn btn-success" %>
+  </div>
+<% end %>

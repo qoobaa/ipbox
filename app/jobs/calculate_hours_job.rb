@@ -12,17 +12,17 @@ class CalculateHoursJob < ApplicationJob
       previous_entry = daily_entries.first.previous
 
       [previous_entry, *daily_entries].each_cons(2) do |previous, current|
-        next if current.manual?
+        next if current.exact?
 
         # handle the case when previous is nil
         previous_committed_at = previous ? previous.committed_at : DateTime.parse("2019-01-01")
 
         hours = (current.committed_at - previous_committed_at) / 3600.0
         hours = case hours
-                   when (..0.5) then 0.5
-                   when (0.5..hours_per_day) then hours.round
-                   when (hours_per_day..) then hours_per_day
-                   end
+                when (..0.5) then 0.5
+                when (0.5..hours_per_day) then hours.round
+                when (hours_per_day..) then hours_per_day
+                end
 
         current.update!(hours: hours)
       end
@@ -30,7 +30,7 @@ class CalculateHoursJob < ApplicationJob
       # adjust the first entry
       if daily_entries.sum(:hours) > hours_per_day
         first_hours = hours_per_day - daily_entries.sum(:hours) + daily_entries.first.hours
-        daily_entries.first.update!(hours: [0.5, first_hours].max) unless daily_entries.first.manual?
+        daily_entries.first.update!(hours: [0.5, first_hours].max) unless daily_entries.first.exact?
       end
     end
   end
