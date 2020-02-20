@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_18_123817) do
+ActiveRecord::Schema.define(version: 2020_02_20_134531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2020_02_18_123817) do
     t.bigint "invoice_id"
     t.string "sha"
     t.bigint "repository_id"
-    t.boolean "manual", default: false, null: false
+    t.boolean "exact", default: false, null: false
     t.index ["invoice_id"], name: "index_entries_on_invoice_id"
     t.index ["repository_id"], name: "index_entries_on_repository_id"
     t.index ["sha", "repository_id"], name: "index_entries_on_sha_and_repository_id", unique: true

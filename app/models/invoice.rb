@@ -8,6 +8,10 @@ class Invoice < ApplicationRecord
 
   after_save :associate_entries
 
+  def period
+    (from..to)
+  end
+
   private
 
   def associate_entries

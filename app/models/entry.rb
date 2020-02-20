@@ -6,7 +6,7 @@ class Entry < ApplicationRecord
   belongs_to :repository
 
   validates :sha, uniqueness: {scope: :invoice_id}
-  validates :manual, inclusion: {in: [true, false]}
+  validates :exact, inclusion: {in: [true, false]}
 
   def self.unassigned
     where(invoice_id: nil)
@@ -16,6 +16,10 @@ class Entry < ApplicationRecord
     beginning_of_year = "#{year}-01-01"
     end_of_year = "#{year}-12-31"
     where("committed_at >= ?", beginning_of_year).where("committed_at <= ?", end_of_year)
+  end
+
+  def self.by_day(day)
+    where("committed_at::TIMESTAMP::DATE = ?", day)
   end
 
   def previous

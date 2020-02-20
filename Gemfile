@@ -3,17 +3,19 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.0'
 
-gem 'rails'
-gem 'pg'
-gem 'puma'
-gem 'sass-rails'
-gem 'webpacker'
-gem 'jbuilder'
-gem 'redis'
 # gem 'bcrypt', '~> 3.1.7'
 # gem 'image_processing', '~> 1.2'
+gem 'icalendar'
+gem 'jbuilder'
+gem 'pg'
+gem 'puma'
+gem 'rails'
 gem 'ransack'
+gem 'redis'
+gem 'rubyzip', require: 'zip'
+gem 'sass-rails'
 gem 'turbolinks'
+gem 'webpacker'
 
 gem 'bootsnap', require: false
 

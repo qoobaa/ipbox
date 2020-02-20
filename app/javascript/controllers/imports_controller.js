@@ -1,15 +1,11 @@
 import { Controller } from "stimulus";
-import ActionCable from "actioncable";
+import consumer from "../channels/consumer";
 
 export default class extends Controller {
   static targets = ["awaiting", "complete", "entries"];
 
-  initialize() {
-    this.cable = ActionCable.createConsumer();
-  }
-
   connect() {
-    this.cable.subscriptions.create(
+    consumer.subscriptions.create(
       { channel: "ImportsChannel", repository_id: this.data.get("repositoryId") },
       { received: this._received.bind(this) }
     );

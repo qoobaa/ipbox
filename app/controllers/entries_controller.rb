@@ -19,9 +19,14 @@ class EntriesController < ApplicationController
     @entry.update!(entry_params)
   end
 
+  def destroy
+    @entry = Entry.find(params[:id])
+    @entry.destroy
+  end
+
   private
 
   def entry_params
-    params.require(:entry).permit(:type, :hours, :manual)
+    params.require(:entry).permit(:type, :hours, :exact)
   end
 end
