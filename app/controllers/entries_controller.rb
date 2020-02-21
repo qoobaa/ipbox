@@ -9,6 +9,10 @@ class EntriesController < ApplicationController
         .by_year(2019)
   end
 
+  def create
+    @entry = Entry.new
+  end
+
   def calculate
     CalculateHoursJob.perform_now
     redirect_to entries_path
@@ -27,6 +31,6 @@ class EntriesController < ApplicationController
   private
 
   def entry_params
-    params.require(:entry).permit(:type, :hours, :exact)
+    params.require(:entry).permit(:description, :type, :hours, :exact)
   end
 end

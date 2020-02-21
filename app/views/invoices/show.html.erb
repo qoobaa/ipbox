@@ -9,7 +9,7 @@
 <table class="table table-condensed table-sm" id="entries">
   <thead>
     <tr>
-      <th>Message</th>
+      <th>Description</th>
       <th class="text-center">Project</th>
       <th class="text-center">Type</th>
       <th class="text-right">Duration</th>
@@ -27,7 +27,7 @@
         <% entries.each do |entry| %>
           <tr>
             <td>
-              <%= entry.message %>
+              <%= entry.description %>
             </td>
             <td class="text-center">
               <%= entry.project.name %>
