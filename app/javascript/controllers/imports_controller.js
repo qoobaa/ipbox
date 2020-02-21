@@ -6,7 +6,7 @@ export default class extends Controller {
 
   connect() {
     consumer.subscriptions.create(
-      { channel: "ImportsChannel", repository_id: this.data.get("repositoryId") },
+      { channel: "ImportsChannel", project_id: this.data.get("projectId") },
       { received: this._received.bind(this) }
     );
   }

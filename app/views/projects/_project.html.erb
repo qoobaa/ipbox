@@ -1,0 +1,11 @@
+<tr id="project-<%= project.id %>">
+  <td>
+    <%= project.name %>
+  </td>
+  <td class="text-center">
+    <%= link_to project.entries.count, entries_path(q: {project_id_eq: project.id}) %>
+  </td>
+  <td class="text-right">
+    <%= link_to "Import Entries", edit_project_path(project), class: "btn btn-warning btn-sm" %>
+  </td>
+</tr>

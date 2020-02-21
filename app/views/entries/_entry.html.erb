@@ -1,12 +1,12 @@
 <tr id="entry-<%= entry.id %>">
   <td>
-    <%= entry.committed_at.to_date %>
+    <%= entry.ended_at.to_date %>
   </td>
   <td>
     <%= entry.message %>
   </td>
   <td class="text-center">
-    <%= entry.repository.name %>
+    <%= entry.project.name %>
   </td>
   <td class="text-center">
     <%= entry.invoice&.number || "<small class='text-muted'>unassigned</small>".html_safe %>

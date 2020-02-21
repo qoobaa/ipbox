@@ -3,9 +3,9 @@ class Entry < ApplicationRecord
 
   enum type: {development: 1, maintenance: 2}
   belongs_to :invoice, optional: true
-  belongs_to :repository
+  belongs_to :project
 
-  validates :sha, uniqueness: {scope: :invoice_id}
+  validates :external_id, uniqueness: {scope: :invoice_id}
   validates :exact, inclusion: {in: [true, false]}
 
   def self.unassigned
@@ -15,14 +15,14 @@ class Entry < ApplicationRecord
   def self.by_year(year)
     beginning_of_year = "#{year}-01-01"
     end_of_year = "#{year}-12-31"
-    where("committed_at >= ?", beginning_of_year).where("committed_at <= ?", end_of_year)
+    where("ended_at >= ?", beginning_of_year).where("ended_at <= ?", end_of_year)
   end
 
   def self.by_day(day)
-    where("committed_at::TIMESTAMP::DATE = ?", day)
+    where("ended_at::TIMESTAMP::DATE = ?", day)
   end
 
   def previous
-    self.class.where("committed_at < ?", committed_at).order(committed_at: :asc).last
+    self.class.where("ended_at < ?", ended_at).order(ended_at: :asc).last
   end
 end

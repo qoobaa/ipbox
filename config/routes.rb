@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     end
   end
   resources :invoices, only: [:index, :show, :new, :create, :edit, :update]
-  resources :repositories, only: [:index, :new, :create, :edit] do
+  resources :projects, only: [:index, :new, :create, :edit] do
     member do
       post :import
       put :upload
