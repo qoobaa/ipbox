@@ -42,7 +42,7 @@ class ProjectsController < ApplicationController
                   external_id: "#{day}-event.uid",
                   ended_at: day,
                   hours: 8,
-                  message: event.summary,
+                  description: event.summary,
                   project_id: @project.id,
                   type: @project.default_type
                 )
@@ -56,7 +56,7 @@ class ProjectsController < ApplicationController
                 external_id: event.uid,
                 ended_at: event.dtend,
                 hours: hours,
-                message: event.summary,
+                description: event.summary,
                 project_id: @project.id,
                 type: @project.default_type
               )

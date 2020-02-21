@@ -22,7 +22,7 @@
         <%= form.collection_select :invoice_id_eq, Invoice.all, :id, :number, {include_blank: "Any Invoice"}, class: "form-control", placeholder: "Search…", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
       </div>
       <div class="col">
-        <%= form.search_field :message_cont, class: "form-control", placeholder: "Search…", autocomplete: "off" %>
+        <%= form.search_field :description_cont, class: "form-control", placeholder: "Search…", autocomplete: "off" %>
       </div>
     </div>
   <% end %>
