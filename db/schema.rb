@@ -10,25 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_20_134531) do
+ActiveRecord::Schema.define(version: 2020_02_21_084242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "entries", force: :cascade do |t|
-    t.datetime "committed_at"
+    t.datetime "ended_at"
     t.text "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "hours"
     t.integer "type"
     t.bigint "invoice_id"
-    t.string "sha"
-    t.bigint "repository_id"
+    t.string "external_id"
+    t.bigint "project_id"
     t.boolean "exact", default: false, null: false
+    t.index ["external_id", "project_id"], name: "index_entries_on_external_id_and_project_id", unique: true
     t.index ["invoice_id"], name: "index_entries_on_invoice_id"
-    t.index ["repository_id"], name: "index_entries_on_repository_id"
-    t.index ["sha", "repository_id"], name: "index_entries_on_sha_and_repository_id", unique: true
+    t.index ["project_id"], name: "index_entries_on_project_id"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_02_20_134531) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "repositories", force: :cascade do |t|
+  create_table "projects", force: :cascade do |t|
     t.string "name"
     t.integer "default_type"
     t.datetime "created_at", precision: 6, null: false
@@ -48,5 +48,5 @@ ActiveRecord::Schema.define(version: 2020_02_20_134531) do
   end
 
   add_foreign_key "entries", "invoices"
-  add_foreign_key "entries", "repositories"
+  add_foreign_key "entries", "projects"
 end

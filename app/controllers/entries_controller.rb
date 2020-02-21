@@ -4,8 +4,8 @@ class EntriesController < ApplicationController
     @q = Entry.ransack(params[:q])
     @entries =
       @q.result
-        .includes(:invoice, :repository)
-        .order(committed_at: :asc)
+        .includes(:invoice, :project)
+        .order(ended_at: :asc)
         .by_year(2019)
   end
 

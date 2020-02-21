@@ -1,4 +1,4 @@
-class Repository < ApplicationRecord
+class Project < ApplicationRecord
   has_many :entries, dependent: :destroy
 
   enum default_type: {development: 1, maintenance: 2}

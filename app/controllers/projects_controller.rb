@@ -1,37 +1,37 @@
-class RepositoriesController < ApplicationController
+class ProjectsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:import]
 
   def index
-    @repositories = Repository.all
+    @projects = Project.all
   end
 
   def new
-    @repository = Repository.new
+    @project = Project.new
   end
 
   def create
-    @repository = Repository.new(repository_params)
-    if @repository.save
-      redirect_to repositories_path
+    @project = Project.new(project_params)
+    if @project.save
+      redirect_to projects_path
     end
   end
 
   def edit
-    @repository = Repository.find(params[:id])
+    @project = Project.find(params[:id])
   end
 
   def import
-    @repository = Repository.find(params[:id])
-    @entries = ImportEntriesJob.perform_now(@repository, request.raw_post)
+    @project = Project.find(params[:id])
+    @entries = ImportEntriesJob.perform_now(@project, request.raw_post)
     AssociateEntriesWithInvoicesJob.perform_now
     CalculateHoursJob.perform_now
-    ActionCable.server.broadcast("imports-#{@repository.id}", entries: @entries.size)
+    ActionCable.server.broadcast("imports-#{@project.id}", entries: @entries.size)
     head :no_content
   end
 
   def upload
-    @repository = Repository.find(params[:id])
-    calendar = params[:repository][:calendar]
+    @project = Project.find(params[:id])
+    calendar = params[:project][:calendar]
     Zip::File.open(calendar) do |io|
       io.entries.select { |entry| entry.name =~ /\.ics$/ }.each do |calendar_entry|
         Icalendar::Calendar.parse(calendar_entry.get_input_stream).each do |calendar|
@@ -39,12 +39,12 @@ class RepositoriesController < ApplicationController
             if event.dtstart.is_a?(Icalendar::Values::Date)
               (event.dtstart..event.dtend).each do |day|
                 Entry.create(
-                  sha: "#{day}-event.uid",
-                  committed_at: day,
+                  external_id: "#{day}-event.uid",
+                  ended_at: day,
                   hours: 8,
                   message: event.summary,
-                  repository_id: @repository.id,
-                  type: @repository.default_type
+                  project_id: @project.id,
+                  type: @project.default_type
                 )
               end
             else
@@ -53,12 +53,12 @@ class RepositoriesController < ApplicationController
 
               Entry.create(
                 exact: true,
-                sha: event.uid,
-                committed_at: event.dtend,
+                external_id: event.uid,
+                ended_at: event.dtend,
                 hours: hours,
                 message: event.summary,
-                repository_id: @repository.id,
-                type: @repository.default_type
+                project_id: @project.id,
+                type: @project.default_type
               )
             end
           end
@@ -66,12 +66,12 @@ class RepositoriesController < ApplicationController
       end
     end
     AssociateEntriesWithInvoicesJob.perform_now
-    redirect_to entries_path(q: {repository_id_eq: @repository.id})
+    redirect_to entries_path(q: {project_id_eq: @project.id})
   end
 
   private
 
-  def repository_params
-    params.require(:repository).permit(:name, :default_type)
+  def project_params
+    params.require(:project).permit(:name, :default_type)
   end
 end

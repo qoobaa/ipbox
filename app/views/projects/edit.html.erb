@@ -11,10 +11,10 @@
 </p>
 
 <code>
-git log --author kuba@kubakuzma.com --no-merges --after='2019-01-01 00:00:00' --before='2019-12-31 23:59:59' --pretty='format:%H %aI %s' | curl -X POST <%= import_repository_url(@repository) %> --data-binary @-
+git log --author kuba@kubakuzma.com --no-merges --after='2019-01-01 00:00:00' --before='2019-12-31 23:59:59' --pretty='format:%H %aI %s' | curl -X POST <%= import_project_url(@project) %> --data-binary @-
 </code>
 
-<div class="my-3" data-controller="imports" data-imports-repository-id="<%= @repository.id %>">
+<div class="my-3" data-controller="imports" data-imports-project-id="<%= @project.id %>">
   <div data-target="imports.awaiting">
     <%= button_tag class: "btn btn-success", disabled: true do %>
       <span class="spinner-border spinner-border-sm" role="status"></span>
@@ -27,7 +27,7 @@ git log --author kuba@kubakuzma.com --no-merges --after='2019-01-01 00:00:00' --
       Successfully imported <span data-target="imports.entries">0</span> entries.
     </p>
     <p>
-      <%= link_to "Browse entries", entries_path(q: {repository_id_eq: @repository.id}), class: "btn btn-success" %>
+      <%= link_to "Browse entries", entries_path(q: {project_id_eq: @project.id}), class: "btn btn-success" %>
     </p>
   </div>
 </div>
@@ -36,7 +36,7 @@ git log --author kuba@kubakuzma.com --no-merges --after='2019-01-01 00:00:00' --
   or
 </p>
 
-<%= form_for @repository, url: upload_repository_path(@repository), html: {method: :put} do |form| %>
+<%= form_for @project, url: upload_project_path(@project), html: {method: :put} do |form| %>
   <div class="form-group">
     <%= form.file_field :calendar, class: "form-control-file" %>
   </div>

@@ -5,7 +5,7 @@ class CalculateHoursJob < ApplicationJob
     hours_per_day = 8
 
     (beginning_of_year..end_of_year).each do |day|
-      daily_entries = Entry.where("committed_at::TIMESTAMP::DATE = ?", day).order(committed_at: :asc)
+      daily_entries = Entry.where("ended_at::TIMESTAMP::DATE = ?", day).order(ended_at: :asc)
 
       next if daily_entries.blank?
 
@@ -15,9 +15,9 @@ class CalculateHoursJob < ApplicationJob
         next if current.exact?
 
         # handle the case when previous is nil
-        previous_committed_at = previous ? previous.committed_at : DateTime.parse("2019-01-01")
+        previous_ended_at = previous ? previous.ended_at : DateTime.parse("2019-01-01")
 
-        hours = (current.committed_at - previous_committed_at) / 3600.0
+        hours = (current.ended_at - previous_ended_at) / 3600.0
         hours = case hours
                 when (..0.5) then 0.5
                 when (0.5..hours_per_day) then hours.round

@@ -10,7 +10,7 @@
   <thead>
     <tr>
       <th>Message</th>
-      <th class="text-center">Repository</th>
+      <th class="text-center">Project</th>
       <th class="text-center">Type</th>
       <th class="text-right">Duration</th>
     </tr>
@@ -30,7 +30,7 @@
               <%= entry.message %>
             </td>
             <td class="text-center">
-              <%= entry.repository.name %>
+              <%= entry.project.name %>
             </td>
             <td class="text-center">
               <% if entry.development? %>

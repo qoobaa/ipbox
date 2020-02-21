@@ -16,7 +16,7 @@
         <%= link_to "Calculate", calculate_entries_path, type: "button", class: "btn btn-warning btn-block", data: {method: :put, disable_with: "Calculating…", remote: true} %>
       </div>
       <div class="col">
-        <%= form.collection_select :repository_id_eq, Repository.all, :id, :name, {include_blank: "Any Repository"}, class: "form-control", placeholder: "Search…", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
+        <%= form.collection_select :project_id_eq, Project.all, :id, :name, {include_blank: "Any Project"}, class: "form-control", placeholder: "Search…", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
       </div>
       <div class="col">
         <%= form.collection_select :invoice_id_eq, Invoice.all, :id, :number, {include_blank: "Any Invoice"}, class: "form-control", placeholder: "Search…", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
