@@ -4,6 +4,7 @@ class ImportEntriesJob < ApplicationJob
       [:external_id, :ended_at, :description].zip(line.chomp.split(" ", 3)).to_h.tap do |attributes|
         attributes[:project_id] = project.id
         attributes[:type] = project.default_type
+        attributes[:hours] = 0.5
       end
     end
     entries = Entry.create(attributes)

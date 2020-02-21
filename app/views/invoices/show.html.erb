@@ -6,7 +6,7 @@
   </div>
 </div>
 
-<table class="table table-condensed table-sm" id="entries">
+<table class="table table-sm table-hover" id="entries">
   <thead>
     <tr>
       <th>Description</th>
@@ -25,9 +25,10 @@
           </th>
         </tr>
         <% entries.each do |entry| %>
-          <tr>
+          <tr id="entry-<%= entry.id %>">
             <td>
-              <%= entry.description %>
+              <%= render "entries/form", entry: entry %>
+              <%= link_to entry.description, "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
             </td>
             <td class="text-center">
               <%= entry.project.name %>

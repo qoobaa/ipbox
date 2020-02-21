@@ -1,4 +1,4 @@
-<tr id="invoice-<%= invoice.id %>">
+<tr id="invoice-<%= invoice.id %>" class="<%= invoice_row_classes(invoice) %>">
   <td>
     <%= link_to invoice.number, invoice_path(invoice) %>
   </td>
@@ -10,5 +10,8 @@
   </td>
   <td class="text-right">
     <%= invoice.entries.sum(:hours) %>
+  </td>
+  <td class="text-right">
+    <%= number_to_percentage(invoice.ratio * 100, precision: 0) %>
   </td>
 </tr>

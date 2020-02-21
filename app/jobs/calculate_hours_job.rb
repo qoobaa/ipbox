@@ -19,7 +19,8 @@ class CalculateHoursJob < ApplicationJob
 
         hours = (current.ended_at - previous_ended_at) / 3600.0
         hours = case hours
-                when (..0.5) then 0.5
+                when (..0.25) then 0.25
+                when (0.25..0.5) then 0.5
                 when (0.5..hours_per_day) then hours.round
                 when (hours_per_day..) then hours_per_day
                 end
