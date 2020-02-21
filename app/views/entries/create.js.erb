@@ -1,0 +1,10 @@
+(function () {
+  var form = document.getElementById("new_entry");
+
+  <% if @entry.valid? %>
+    jQuery(form).modal("hide");
+    Turbolinks.visit("<%= url_for(params.to_unsafe_h).html_safe %>");
+  <% else %>
+    form.innerHTML = "<%= j render('form', entry: @entry) %>";
+  <% end %>
+})();

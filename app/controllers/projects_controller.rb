@@ -23,7 +23,6 @@ class ProjectsController < ApplicationController
   def import
     @project = Project.find(params[:id])
     @entries = ImportEntriesJob.perform_now(@project, request.raw_post)
-    AssociateEntriesWithInvoicesJob.perform_now
     CalculateHoursJob.perform_now
     ActionCable.server.broadcast("imports-#{@project.id}", entries: @entries.size)
     head :no_content

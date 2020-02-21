@@ -8,14 +8,21 @@ class Invoice < ApplicationRecord
 
   after_save :associate_entries
 
+  def self.including_day(day)
+    where("invoices.from <= ?", day.to_date).where("? <= invoices.to", day.to_date)
+  end
+
   def period
     (from..to)
+  end
+
+  def ratio
+    entries.development.sum(:hours) / hours
   end
 
   private
 
   def associate_entries
-    entries = Entry.where("ended_at::TIMESTAMP::DATE >= ?", from).where("ended_at::TIMESTAMP::DATE <= ?", to)
-    entries.update_all(invoice_id: id)
+    Entry.between_days(from, to).update_all(invoice_id: id)
   end
 end
