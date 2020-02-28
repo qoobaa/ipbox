@@ -30,7 +30,7 @@
 
         <div class="form-group">
           <%= form.label :hours, class: "form-label" %>
-          <%= form.number_field :hours, class: "form-control", step: 0.25, min: 0 %>
+          <%= form.number_field :hours, class: "form-control", step: 0.5, min: 0 %>
           <%= bootstrap_invalid_feedback_for(form.object, :hours) %>
         </div>
 

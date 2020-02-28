@@ -1,44 +1,47 @@
 <div class="row my-3">
   <div class="col">
     <h2>
-      Invoice <%= @invoice.number %>
+      Faktura <%= @invoice.number %>
     </h2>
   </div>
 </div>
 
-<table class="table table-sm table-hover" id="entries">
+<table class="table table-sm" id="entries">
   <thead>
     <tr>
-      <th>Description</th>
-      <th class="text-center">Project</th>
-      <th class="text-center">Type</th>
-      <th class="text-right">Duration</th>
+      <th class="text-center">Data</th>
+      <th class="text-center">Opis</th>
+      <th class="text-center">Typ</th>
+      <th class="text-right">Liczba godzin</th>
     </tr>
   </thead>
   <tbody>
     <% @invoice.period.each do |day| %>
       <% entries = @invoice.entries.by_day(day) %>
+      <% total_hours = entries.sum(:hours) %>
       <% if entries.present? %>
-        <tr>
-          <th colspan="4" class="text-center">
-            <%= day %> (<%= day.strftime("%A") %>)
-          </th>
-        </tr>
-        <% entries.each do |entry| %>
-          <tr id="entry-<%= entry.id %>">
+        <% entries.each.with_index do |entry, i| %>
+          <tr>
+            <% if i.zero? %>
+              <td rowspan="<%= entries.size %>" class="text-center align-middle">
+                <div>
+                  <%= l day, format: "%A, %-d %B %Y" %>
+                </div>
+                <div>
+                  <%= entries.sum(:hours) %> godzin
+                </div>
+              </td>
+            <% end %>
             <td>
               <%= render "entries/form", entry: entry %>
               <%= link_to entry.description, "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
             </td>
             <td class="text-center">
-              <%= entry.project.name %>
-            </td>
-            <td class="text-center">
               <% if entry.development? %>
-                <%= link_to "development", entry_path(entry), class: "badge badge-success", data: {method: :patch, remote: true, params: "entry[type]=maintenance"} %>
+                programowanie
               <% end %>
               <% if entry.maintenance? %>
-                <%= link_to "maintenance", entry_path(entry), class: "badge badge-secondary", data: {method: :patch, remote: true, params: "entry[type]=development"} %>
+                utrzymanie
               <% end %>
             </td>
             <td class="text-right">
@@ -46,12 +49,6 @@
             </td>
           </tr>
         <% end %>
-        <tr>
-          <td colspan="4" class="text-right">
-            Daily total:
-            <%= entries.sum(:hours) %>
-          </td>
-        </tr>
       <% end %>
     <% end %>
   </tbody>
