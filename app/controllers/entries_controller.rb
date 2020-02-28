@@ -3,14 +3,17 @@ class EntriesController < ApplicationController
     @entry = Entry.new
     @unassigned_entries = Entry.by_year(2019).unassigned
     @q = Entry.ransack(params[:q])
+    @projects = Project.all
     @entries =
       @q.result
         .includes(:invoice, :project)
         .order(ended_at: :asc)
         .by_year(2019)
+        .page(params[:page])
   end
 
   def create
+    @projects = Project.all
     @entry = Entry.create(entry_params)
   end
 
@@ -20,6 +23,7 @@ class EntriesController < ApplicationController
   end
 
   def update
+    @projects = Project.all
     @entry = Entry.find(params[:id])
     @entry.update!(entry_params)
   end

@@ -3,7 +3,7 @@
     <%= entry.ended_at.to_date %>
   </td>
   <td>
-    <%= entry.description %>
+    <%= link_to entry.description, "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
   </td>
   <td class="text-center">
     <%= entry.project.name %>
@@ -19,22 +19,7 @@
       <%= link_to "maintenance", entry_path(entry), class: "badge badge-secondary", data: {method: :patch, remote: true, params: "entry[type]=development"} %>
     <% end %>
   </td>
-  <td class="text-center" data-controller="entry-hours">
-    <%= form_for entry, url: entry_path(entry), data: {remote: true, target: "entry-hours.form"}, html: {class: "d-none"} do |form| %>
-      <div class="input-group input-group-sm">
-        <%= form.hidden_field :exact, value: true %>
-        <%= form.number_field :hours, min: 0, max: 8, step: 0.5, autocomplete: "off", class: "form-control", data: {target: "entry-hours.input"}%>
-        <div class="input-group-append">
-          <%= form.submit "✔", class: "btn btn-success" %>
-          <%= button_tag "✗", type: "button", class: "btn btn-danger", data: {action: "entry-hours#cancel"} %>
-        </div>
-      </div>
-    <% end %>
-    <%= link_to "#{entry.hours}h", "javascript:void(0)", data: {action: "entry-hours#edit", target: "entry-hours.link"} %>
-  </td>
-  <td>
-    <%= link_to entry_path(entry), data: {method: :delete, confirm: "Are you sure?", remote: true} do %>
-      <%= octicon "x" %>
-    <% end %>
+  <td class="text-center">
+    <%= link_to "#{entry.hours}", "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
   </td>
 </tr>
