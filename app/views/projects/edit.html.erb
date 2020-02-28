@@ -1,13 +1,13 @@
 <div class="row my-3">
   <div class="col">
     <h2>
-      Import Entries
+      Importuj wpisy
     </h2>
   </div>
 </div>
 
 <p>
-  Please execute the following command inside the project's Git repository:
+  Proszę wywołać następujące polecenie wewnątrz repozytorium importowanego projektu:
 </p>
 
 <code>
@@ -18,30 +18,31 @@ git log --author kuba@kubakuzma.com --no-merges --after='2019-01-01 00:00:00' --
   <div data-target="imports.awaiting">
     <%= button_tag class: "btn btn-success", disabled: true do %>
       <span class="spinner-border spinner-border-sm" role="status"></span>
-      Waiting for entries…
+      Oczekiwanie na wpisy…
     <% end %>
   </div>
 
   <div data-target="imports.complete" class="d-none">
     <p>
-      Successfully imported <span data-target="imports.entries">0</span> entries.
+      Pomyślnie zaimportowano <span data-target="imports.entries">0</span> wpisów.
     </p>
     <p>
-      <%= link_to "Browse entries", entries_path(q: {project_id_eq: @project.id}), class: "btn btn-success" %>
+      <%= link_to "Przeglądaj wpisy", entries_path(q: {project_id_eq: @project.id}), class: "btn btn-success" %>
     </p>
   </div>
 </div>
 
 <p>
-  or
+  lub
 </p>
 
 <%= form_for @project, url: upload_project_path(@project), html: {method: :put} do |form| %>
   <div class="form-group">
+    <%= form.label :calendar, "Załaduj kalendarz" %>
     <%= form.file_field :calendar, class: "form-control-file" %>
   </div>
 
   <div class="form-group">
-    <%= form.submit "Upload", class: "btn btn-success" %>
+    <%= form.submit "Załaduj", class: "btn btn-success" %>
   </div>
 <% end %>
