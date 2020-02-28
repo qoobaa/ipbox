@@ -2,6 +2,8 @@
   <div class="col">
     <h2>
       Faktura <%= @invoice.number %>
+      <span class="badge badge-success"><%= number_to_percentage(@invoice.ratio * 100, precision: 0) %> programowanie</span>
+      <span class="badge badge-secondary"><%= number_to_percentage((1 - @invoice.ratio) * 100, precision: 0) %> utrzymanie</span>
     </h2>
   </div>
 </div>
