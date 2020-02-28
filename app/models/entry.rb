@@ -14,6 +14,10 @@ class Entry < ApplicationRecord
   before_validation :assign_external_id
   before_save :assign_invoice
 
+  def self.ended_on(day)
+    where("ended_at BETWEEN ? AND ?", day.to_date.beginning_of_day, day.to_date.end_of_day)
+  end
+
   def self.unassigned
     where(invoice_id: nil)
   end
@@ -28,6 +32,10 @@ class Entry < ApplicationRecord
 
   def self.between_days(from, to)
     where("? <= ended_at", from.to_date.beginning_of_day).where("ended_at <= ?", to.to_date.end_of_day)
+  end
+
+  def self.ransackable_scopes(auth_object = nil)
+    %i[ended_on]
   end
 
   def previous
