@@ -16,3 +16,19 @@ pl:
       next: Dalej &rsaquo;
       previous: "&lsaquo; Wstecz"
       truncate: "&hellip;"
+  activerecord:
+    attributes:
+      invoice:
+        number: Numer
+        from: Od
+        to: Do
+        hours: Liczba godzin
+      entry:
+        description: Opis
+        ended_at: Data
+        hours: Liczba godzin
+        project_id: Projekt
+        type: Typ
+      project:
+        name: Nazwa
+        default_type: Domyślny typ aktywności

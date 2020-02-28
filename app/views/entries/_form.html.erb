@@ -4,9 +4,9 @@
       <div class="modal-header">
         <h5 class="modal-title">
           <% if entry.new_record? %>
-            New Entry
+            Nowy wpis
           <% else %>
-            Edit Entry
+            Edytuj wpis
           <% end %>
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -45,23 +45,22 @@
           <div class="form-check">
             <%= form.radio_button :type, "development", class: "form-check-input" %>
             <%= form.label :type_development, class: "form-check-label" do %>
-              <span class="badge badge-success">development</span>
+              <span class="badge badge-success">programowanie</span>
             <% end %>
           </div>
           <div class="form-check">
             <%= form.radio_button :type, "maintenance", class: "form-check-input" %>
             <%= form.label :type_maintenance, class: "form-check-label" do %>
-              <span class="badge badge-secondary">maintenance</span>
+              <span class="badge badge-secondary">utrzymanie</span>
             <% end %>
           </div>
           <%= bootstrap_invalid_feedback_for(form.object, :project_id) %>
         </div>
       </div>
       <div class="modal-footer">
-        <%= link_to "Delete", entry_path(form.object), class: "btn btn-danger", data: {method: :delete, confirm: "Are you sure?", remote: true} if form.object.persisted? %>
-
-        <%= form.submit "Save", class: "btn btn-success" %>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= link_to "Usuń", entry_path(form.object), class: "btn btn-danger", data: {method: :delete, confirm: "Are you sure?", remote: true} if form.object.persisted? %>
+        <%= form.submit "Zapisz", class: "btn btn-primary" %>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
       </div>
     </div>
   </div>
