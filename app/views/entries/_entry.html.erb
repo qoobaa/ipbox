@@ -1,4 +1,4 @@
-<tr id="entry-<%= entry.id %>">
+<tr id="entry_<%= entry.id %>">
   <td>
     <%= entry.ended_at.to_date %>
   </td>
@@ -6,7 +6,7 @@
     <%= link_to entry.description, "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
   </td>
   <td class="text-center">
-    <%= entry.project.name %>
+    <%= link_to entry.project.name, "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
   </td>
   <td class="text-center">
     <%= entry.invoice&.number || "<small class='text-muted'>unassigned</small>".html_safe %>

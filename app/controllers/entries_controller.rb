@@ -25,7 +25,7 @@ class EntriesController < ApplicationController
   def update
     @projects = Project.all
     @entry = Entry.find(params[:id])
-    @entry.update!(entry_params)
+    @entry.update(entry_params)
   end
 
   def destroy
