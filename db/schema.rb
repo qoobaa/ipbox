@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_01_181601) do
+ActiveRecord::Schema.define(version: 2020_03_01_182713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2020_03_01_181601) do
     t.boolean "exact", default: false, null: false
     t.date "day"
     t.bigint "user_id", null: false
-    t.index ["external_id", "project_id"], name: "index_entries_on_external_id_and_project_id", unique: true
+    t.index ["external_id", "user_id"], name: "index_entries_on_external_id_and_user_id", unique: true
     t.index ["invoice_id"], name: "index_entries_on_invoice_id"
     t.index ["project_id"], name: "index_entries_on_project_id"
     t.index ["user_id"], name: "index_entries_on_user_id"

@@ -7,7 +7,7 @@ class Entry < ApplicationRecord
   belongs_to :project
   belongs_to :user
 
-  validates :external_id, presence: true, uniqueness: true
+  validates :external_id, presence: true, uniqueness: {scope: :user_id}
   validates :exact, inclusion: {in: [true, false]}
   validates :description, presence: true
   validates :hours, presence: true, inclusion: {in: (0...24).step(0.5).to_a}
