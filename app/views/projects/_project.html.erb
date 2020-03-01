@@ -6,6 +6,8 @@
     <%= link_to project.entries.count, entries_path(q: {project_id_eq: project.id}) %>
   </td>
   <td class="text-right">
-    <%= link_to "Importuj wpisy", edit_project_path(project), class: "btn btn-warning btn-sm" %>
+    <% if project.entries.empty? %>
+      <%= link_to "Importuj wpisy", edit_project_path(project), class: "btn btn-warning btn-sm" %>
+    <% end %>
   </td>
 </tr>

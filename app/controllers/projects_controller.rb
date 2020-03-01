@@ -1,3 +1,4 @@
+# coding: utf-8
 class ProjectsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:import]
 
@@ -22,48 +23,21 @@ class ProjectsController < ApplicationController
 
   def import
     @project = Project.find(params[:id])
-    @entries = ImportEntriesJob.perform_now(@project, request.raw_post)
-    CalculateHoursJob.perform_now
-    ActionCable.server.broadcast("imports-#{@project.id}", entries: @entries.size)
-    head :no_content
+
+    if @project.entries.count > 0
+      render body: "błąd: ten projekt został już wcześniej zaimportowany i zawiera wpisy\n"
+    else
+      @entries = ImportEntriesJob.perform_now(@project, request.raw_post)
+      CalculateHoursJob.perform_now
+      ActionCable.server.broadcast("imports-#{@project.id}", entries: @entries.size)
+      render body: "pomyślnie zaimportowano #{@entries.count} wpisów\n"
+    end
   end
 
   def upload
     @project = Project.find(params[:id])
-    calendar = params[:project][:calendar]
-    Zip::File.open(calendar) do |io|
-      io.entries.select { |entry| entry.name =~ /\.ics$/ }.each do |calendar_entry|
-        Icalendar::Calendar.parse(calendar_entry.get_input_stream).each do |calendar|
-          calendar.events.each do |event|
-            if event.dtstart.is_a?(Icalendar::Values::Date)
-              (event.dtstart..event.dtend).each do |day|
-                Entry.create(
-                  external_id: "#{day}-event.uid",
-                  ended_at: day,
-                  hours: 8,
-                  description: event.summary,
-                  project_id: @project.id,
-                  type: @project.default_type
-                )
-              end
-            else
-              hours = (event.dtend - event.dtstart) / 3600.0
-              hours = hours < 0.5 ? 0.5 : hours.round
-
-              Entry.create(
-                exact: true,
-                external_id: event.uid,
-                ended_at: event.dtend,
-                hours: hours,
-                description: event.summary,
-                project_id: @project.id,
-                type: @project.default_type
-              )
-            end
-          end
-        end
-      end
-    end
+    @project.update(file: params[:project][:file])
+    ImportCalendarJob.perform_now(@project)
     AssociateEntriesWithInvoicesJob.perform_now
     redirect_to entries_path(q: {project_id_eq: @project.id})
   end
