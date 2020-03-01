@@ -5,6 +5,7 @@ class ImportEntriesJob < ApplicationJob
         attributes[:project_id] = project.id
         attributes[:type] = project.default_type
         attributes[:hours] = 0.5
+        attributes[:user_id] = project.user_id
       end
     end
     entries = Entry.create(attributes).select(&:valid?)

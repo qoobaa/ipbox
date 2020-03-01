@@ -5,6 +5,7 @@ class Entry < ApplicationRecord
   enum type: {development: 1, maintenance: 2}
   belongs_to :invoice, optional: true
   belongs_to :project
+  belongs_to :user
 
   validates :external_id, presence: true, uniqueness: true
   validates :exact, inclusion: {in: [true, false]}

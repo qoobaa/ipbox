@@ -6,7 +6,13 @@
       <th class="text-right"></th>
     </tr>
   </thead>
-  <tbody>
-    <%= render @projects %>
-  </tbody>
+  <% if @projects.count > 0 %>
+    <tbody>
+      <%= render @projects %>
+    </tbody>
+  <% else %>
+    <tr>
+      <td colspan="3" class="text-center text-muted">Nie masz żadnych projektów</td>
+    </tr>
+  <% end %>
 </table>

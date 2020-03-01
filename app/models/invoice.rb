@@ -1,5 +1,6 @@
 class Invoice < ApplicationRecord
   has_many :entries
+  belongs_to :user
 
   validates :number, presence: true
   validates :from, presence: true

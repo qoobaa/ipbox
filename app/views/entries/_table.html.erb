@@ -11,7 +11,13 @@
       <th class="text-right">Liczba godzin</th>
     </tr>
   </thead>
-  <tbody>
-    <%= render @entries %>
-  </tbody>
+  <% if @entries.count > 0 %>
+    <tbody>
+      <%= render @entries %>
+    </tbody>
+  <% else %>
+    <tr>
+      <td colspan="6" class="text-center text-muted">Nie masz żadnych wpisów</td>
+    </tr>
+  <% end %>
 </table>
