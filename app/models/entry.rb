@@ -6,7 +6,7 @@ class Entry < ApplicationRecord
   belongs_to :invoice, optional: true
   belongs_to :project
 
-  validates :external_id, presence: true, uniqueness: {scope: :invoice_id}
+  validates :external_id, presence: true, uniqueness: true
   validates :exact, inclusion: {in: [true, false]}
   validates :description, presence: true
   validates :hours, presence: true, inclusion: {in: (0...24).step(0.5).to_a}
@@ -14,13 +14,6 @@ class Entry < ApplicationRecord
 
   before_validation :assign_day, :assign_external_id
   before_save :assign_invoice
-
-  def self.with_estimated_hours
-    select <<-SQL
-      *,
-      ROUND(LEAST(EXTRACT(EPOCH FROM ended_at - (SELECT MAX(ended_at) FROM entries e WHERE e.ended_at < entries.ended_at)) / 3600, 8), 1) AS estimated_hours
-    SQL
-  end
 
   def self.unassigned
     where(invoice_id: nil)
