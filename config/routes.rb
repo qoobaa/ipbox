@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :entries, only: [:index, :create, :update, :destroy] do
     collection do
-      put :calculate
+      post :update_all
     end
   end
   resources :invoices, only: [:index, :show, :new, :create, :edit, :update]

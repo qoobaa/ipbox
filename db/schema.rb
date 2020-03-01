@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_084830) do
+ActiveRecord::Schema.define(version: 2020_03_01_120958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2020_02_21_084830) do
     t.string "external_id"
     t.bigint "project_id"
     t.boolean "exact", default: false, null: false
+    t.date "day"
     t.index ["external_id", "project_id"], name: "index_entries_on_external_id_and_project_id", unique: true
     t.index ["invoice_id"], name: "index_entries_on_invoice_id"
     t.index ["project_id"], name: "index_entries_on_project_id"

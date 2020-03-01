@@ -1,1 +1,9 @@
 @import "~bootstrap/scss/bootstrap";
+
+.hover-only {
+    visibility: hidden;
+}
+
+:hover + .hover-only {
+    visibility: visible;
+}
