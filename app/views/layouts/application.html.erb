@@ -14,17 +14,19 @@
       <div class="container-fluid">
         <%= link_to "IP Box", root_path, class: "navbar-brand" %>
 
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <%= link_to "Projekty", projects_path, class: "nav-link #{'active' if controller_path.starts_with?('projects')}" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Wpisy", entries_path, class: "nav-link #{'active' if controller_path.starts_with?('entries')}" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Faktury", invoices_path, class: "nav-link #{'active' if controller_path.starts_with?('invoices')}" %>
-          </li>
-        </ul>
+        <% if signed_in? %>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <%= link_to "Projekty", projects_path, class: "nav-link #{'active' if controller_path.starts_with?('projects')}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Wpisy", entries_path, class: "nav-link #{'active' if controller_path.starts_with?('entries')}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Faktury", invoices_path, class: "nav-link #{'active' if controller_path.starts_with?('invoices')}" %>
+            </li>
+          </ul>
+        <% end %>
 
         <ul class="navbar-nav ml-auto">
           <% if signed_in? %>

@@ -27,10 +27,10 @@ class ProjectsController < ApplicationController
     @project = Project.find_by(uuid: params[:id])
 
     if @project.entries.count > 0
-      render body: "błąd: ten projekt został już wcześniej zaimportowany i zawiera wpisy\n"
+      render body: "niepowodzenie: projekt zawiera wpisy\n"
     else
       ImportEntriesJob.perform_later(@project, request.raw_post)
-      render body: "sukces: zaimportowano wpisy"
+      render body: "sukces: zaimportowano wpisy\n"
     end
   end
 
