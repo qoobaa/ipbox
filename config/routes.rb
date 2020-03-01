@@ -12,5 +12,5 @@ Rails.application.routes.draw do
       put :upload
     end
   end
-  root to: "projects#index"
+  root to: "home#show"
 end
