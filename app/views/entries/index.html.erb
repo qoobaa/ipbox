@@ -1,37 +1,43 @@
-<div class="row my-3">
-  <div class="col w-25">
-    <h2>
-      Wpisy
-    </h2>
-  </div>
-  <%= search_form_for @q, url: entries_path, method: :get, remote: true, class: "col" do |form| %>
+<div class="my-3">
+  <%= search_form_for @q, url: entries_path, method: :get, remote: true do |form| %>
     <div class="form-row">
+      <h2 class="col">
+        Wpisy
+      </h2>
       <div class="col">
-        <%= link_to "Nowy", "javascript:void(0)", type: "button", class: "btn btn-success btn-block", data: {toggle: "modal", target: "#new_entry"} %>
+        <%= form.search_field :description_cont, class: "form-control", placeholder: "Opis", autocomplete: "off" %>
       </div>
       <div class="col">
-        <%= link_to "Przelicz", calculate_entries_path, type: "button", class: "btn btn-warning btn-block", data: {method: :put, disable_with: "Calculating…", remote: true} %>
+        <%= form.date_field :day_eq, class: "form-control", autocomplete: "off", value: form.object.day_eq, min: "2019-01-01", max: "2019-12-31" %>
       </div>
       <div class="col">
-        <%= form.collection_select :project_id_eq, Project.all, :id, :name, {include_blank: "Dowolny projekt"}, class: "form-control", placeholder: "Szukaj…", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
+        <%= form.collection_select :project_id_eq, Project.all, :id, :name, {include_blank: "Dowolny projekt"}, class: "form-control", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
       </div>
       <div class="col">
-        <%= form.collection_select :invoice_id_eq, Invoice.all, :id, :number, {include_blank: "Dowolna faktura"}, class: "form-control", placeholder: "Szukaj…", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
-      </div>
-      <div class="col">
-        <%= form.search_field :description_cont, class: "form-control", placeholder: "Szukaj…", autocomplete: "off" %>
-      </div>
-      <div class="col">
-        <%= form.date_field :ended_on, class: "form-control", autocomplete: "off", value: form.object.ended_on %>
+        <%= form.collection_select :invoice_id_eq, Invoice.all, :id, :number, {include_blank: "Dowolna faktura"}, class: "form-control", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
       </div>
       <div class="col">
         <%= form.submit "Filtruj", class: "btn btn-primary btn-block" %>
+      </div>
+      <div class="col">
+        <%= link_to "Wyczyść filtry", entries_path, type: "button", class: "btn btn-secondary btn-block", data: {remote: true} %>
       </div>
     </div>
   <% end %>
 </div>
 
 <%= render "form", entry: @entry %>
+<%= render "update_entries_form", update_entries_form: @update_entries_form %>
 <%= render "table" %>
 
-<%= paginate @entries %>
+<div class="row">
+  <div class="col">
+    <%= paginate @entries %>
+  </div>
+  <div class="col text-right">
+    <%= link_to "javascript:void(0)", type: "button", class: "btn btn-warning", data: {toggle: "modal", target: "#new_update_entries_form"} do %>
+      Zmień <%= t("entry_count", count: @entries.total_count) %>
+    <% end %>
+    <%= link_to "Dodaj nowy wpis", "javascript:void(0)", type: "button", class: "btn btn-success", data: {toggle: "modal", target: "#new_entry"} %>
+  </div>
+</div>

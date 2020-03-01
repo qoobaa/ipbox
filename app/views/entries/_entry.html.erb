@@ -1,15 +1,23 @@
 <tr id="entry_<%= entry.id %>">
   <td>
-    <%= entry.ended_at.to_date %>
+    <%= link_to entry.day, entries_path(q: {day_eq: entry.day}) %>
+    <span class="hover-only"><%= octicon "search" %></span>
   </td>
   <td>
     <%= link_to entry.description, "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
+    <span class="hover-only"><%= octicon "pencil" %></span>
   </td>
   <td class="text-center">
-    <%= link_to entry.project.name, "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
+    <%= link_to entry.project.name, entries_path(q: {project_id_eq: entry.project_id}) %>
+    <span class="hover-only"><%= octicon "search" %></span>
   </td>
   <td class="text-center">
-    <%= entry.invoice&.number || "<small class='text-muted'>unassigned</small>".html_safe %>
+    <% if entry.invoice %>
+      <%= link_to entry.invoice.number, entries_path(q: {invoice_id_eq: entry.invoice_id}) %>
+      <span class="hover-only"><%= octicon "search" %></span>
+    <% else %>
+      <small class='text-muted'>unassigned</small>
+    <% end %>
   </td>
   <td class="text-center">
     <% if entry.development? %>
@@ -18,8 +26,10 @@
     <% if entry.maintenance? %>
       <%= link_to "utrzymanie", entry_path(entry), class: "badge badge-secondary", data: {method: :patch, remote: true, params: "entry[type]=development"} %>
     <% end %>
+    <span class="hover-only"><%= octicon "pencil" %></span>
   </td>
-  <td class="text-center">
-    <%= link_to "#{entry.hours}", "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
+  <td class="text-right">
+    <%= link_to entry.hours, "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
+    <span class="hover-only"><%= octicon "pencil" %></span>
   </td>
 </tr>

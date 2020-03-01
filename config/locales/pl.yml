@@ -32,3 +32,15 @@ pl:
       project:
         name: Nazwa
         default_type: Domyślny typ aktywności
+  activemodel:
+    attributes:
+      update_entries_form:
+        project_id: Projekt
+        hours: Liczba godzin
+        type: Typ
+        description: Opis
+  entry_count:
+    one: "%{count} wpis"
+    few: "%{count} wpisy"
+    many: "%{count} wpisów"
+

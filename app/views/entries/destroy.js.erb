@@ -1,7 +1,10 @@
 (function () {
   var entryNode = document.getElementById("entry_<%= @entry.id %>");
+  var form = document.getElementById("edit_entry_<%= @entry.id %>");
 
   if (entryNode) {
     entryNode.parentNode.removeChild(entryNode);
   }
+
+  jQuery(form).modal("hide");
 })()
