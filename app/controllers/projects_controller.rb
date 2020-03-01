@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     if @project.save
-      redirect_to projects_path
+      redirect_to edit_project_path(@project)
     end
   end
 
@@ -27,19 +27,16 @@ class ProjectsController < ApplicationController
     if @project.entries.count > 0
       render body: "błąd: ten projekt został już wcześniej zaimportowany i zawiera wpisy\n"
     else
-      @entries = ImportEntriesJob.perform_now(@project, request.raw_post)
-      CalculateHoursJob.perform_now
-      ActionCable.server.broadcast("imports-#{@project.id}", entries: @entries.size)
-      render body: "pomyślnie zaimportowano #{@entries.count} wpisów\n"
+      ImportEntriesJob.perform_later(@project, request.raw_post)
+      render body: "sukces: zaimportowano wpisy"
     end
   end
 
   def upload
     @project = Project.find(params[:id])
     @project.update(file: params[:project][:file])
-    ImportCalendarJob.perform_now(@project)
-    AssociateEntriesWithInvoicesJob.perform_now
-    redirect_to entries_path(q: {project_id_eq: @project.id})
+    ImportCalendarJob.perform_later(@project)
+    head :ok
   end
 
   private
