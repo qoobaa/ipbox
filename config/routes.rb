@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :entries, only: [:index, :create, :update, :destroy] do
     collection do
       post :update_all
@@ -11,5 +12,5 @@ Rails.application.routes.draw do
       put :upload
     end
   end
-  root to: "entries#index"
+  root to: "projects#index"
 end

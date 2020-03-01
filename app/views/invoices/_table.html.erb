@@ -8,23 +8,29 @@
       <th class="text-right">Procent</th>
     </tr>
   </thead>
-  <tbody>
-    <%= render @invoices %>
-  </tbody>
-  <tfoot>
+  <% if @invoices.count > 0 %>
+    <tbody>
+      <%= render @invoices %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="2" class="text-right">
+          Suma
+        </th>
+        <th class="text-right">
+          <%= Invoice.sum(:hours) %>
+        </th>
+        <th class="text-right">
+          <%= Invoice.joins(:entries).sum("entries.hours") %>
+        </th>
+        <th class="text-right">
+          <%= number_to_percentage(Invoice.all.map(&:ratio).sum / Invoice.all.size * 100, precision: 0)  %>
+        </th>
+      </tr>
+    </tfoot>
+  <% else %>
     <tr>
-      <th colspan="2" class="text-right">
-        Total
-      </th>
-      <th class="text-right">
-        <%= Invoice.sum(:hours) %>
-      </th>
-      <th class="text-right">
-        <%= Invoice.joins(:entries).sum("entries.hours") %>
-      </th>
-      <th class="text-right">
-        <%= number_to_percentage(Invoice.all.map(&:ratio).sum / Invoice.all.size * 100, precision: 0)  %>
-      </th>
+      <td colspan="5" class="text-center text-muted">Nie masz żadnych faktur</td>
     </tr>
-  </tfoot>
+  <% end %>
 </table>

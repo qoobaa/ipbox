@@ -1,9 +1,11 @@
 class EntriesController < ApplicationController
+  before_action :assign_user
+
   def index
-    @entry = Entry.new
-    @unassigned_entries = Entry.by_year(2019).unassigned
-    @q = Entry.ransack(params[:q])
-    @projects = Project.all
+    @entry = @user.entries.build
+    @unassigned_entries = @user.entries.by_year(2019).unassigned
+    @q = @user.entries.ransack(params[:q])
+    @projects = @user.projects
     @entries =
       @q.result
         .includes(:invoice, :project)
@@ -14,19 +16,19 @@ class EntriesController < ApplicationController
   end
 
   def create
-    @projects = Project.all
-    @entry = Entry.create(entry_params)
+    @projects = @user.projects
+    @entry = @user.entries.create(entry_params)
   end
 
   def update
-    @projects = Project.all
-    @entry = Entry.find(params[:id])
+    @projects = @user.projects
+    @entry = @user.entries.find(params[:id])
     @entry.update(entry_params)
   end
 
   def update_all
-    @projects = Project.all
-    @q = Entry.ransack(params[:q])
+    @projects = @user.projects
+    @q = @user.entries.ransack(params[:q])
     @entries = @q.result.by_year(2019)
     @update_entries_form = UpdateEntriesForm.new(update_entries_form_params)
     @update_entries_form.entries = @entries
@@ -37,11 +39,15 @@ class EntriesController < ApplicationController
   end
 
   def destroy
-    @entry = Entry.find(params[:id])
+    @entry = @user.entries.find(params[:id])
     @entry.destroy
   end
 
   private
+
+  def assign_user
+    @user = current_user
+  end
 
   def entry_params
     params.require(:entry).permit(:description, :type, :hours, :ended_at, :project_id, :exact)

@@ -43,4 +43,5 @@ pl:
     one: "%{count} wpis"
     few: "%{count} wpisy"
     many: "%{count} wpisów"
-
+  maintenance: "utrzymanie"
+  development: "programowanie"

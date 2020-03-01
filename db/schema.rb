@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_01_164118) do
+ActiveRecord::Schema.define(version: 2020_03_01_181601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -48,9 +49,11 @@ ActiveRecord::Schema.define(version: 2020_03_01_164118) do
     t.bigint "project_id"
     t.boolean "exact", default: false, null: false
     t.date "day"
+    t.bigint "user_id", null: false
     t.index ["external_id", "project_id"], name: "index_entries_on_external_id_and_project_id", unique: true
     t.index ["invoice_id"], name: "index_entries_on_invoice_id"
     t.index ["project_id"], name: "index_entries_on_project_id"
+    t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -60,6 +63,8 @@ ActiveRecord::Schema.define(version: 2020_03_01_164118) do
     t.decimal "hours"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_invoices_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -67,9 +72,28 @@ ActiveRecord::Schema.define(version: 2020_03_01_164118) do
     t.integer "default_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }
+    t.index ["user_id"], name: "index_projects_on_user_id"
+    t.index ["uuid"], name: "index_projects_on_uuid", unique: true
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "entries", "invoices"
   add_foreign_key "entries", "projects"
+  add_foreign_key "entries", "users"
+  add_foreign_key "invoices", "users"
+  add_foreign_key "projects", "users"
 end

@@ -13,7 +13,8 @@ class ImportCalendarJob < ApplicationJob
                     hours: 8,
                     description: event.summary,
                     project_id: project.id,
-                    type: project.default_type
+                    type: project.default_type,
+                    user_id: project.user_id
                   )
                 end
               else
@@ -27,7 +28,8 @@ class ImportCalendarJob < ApplicationJob
                   hours: hours,
                   description: event.summary,
                   project_id: project.id,
-                  type: project.default_type
+                  type: project.default_type,
+                  user_id: project.user_id
                 )
               end
             end

@@ -8,7 +8,7 @@
 
     <div class="form-group">
       <%= form.label :default_type, class: "form-label" %>
-      <%= form.collection_select :default_type, Project.default_types.to_a, :first, :first, {prompt: true}, class: "form-control" %>
+      <%= form.collection_select :default_type, Project.default_types.keys.map { |type| [type, t(type)] }, :first, :second, {prompt: true}, class: "form-control" %>
       <%= bootstrap_invalid_feedback_for(form.object, :default_type) %>
     </div>
 

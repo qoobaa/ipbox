@@ -5,6 +5,7 @@ ruby '2.7.0'
 
 # gem 'bcrypt', '~> 3.1.7'
 # gem 'image_processing', '~> 1.2'
+gem 'devise'
 gem 'icalendar'
 gem 'jbuilder'
 gem 'kaminari'
