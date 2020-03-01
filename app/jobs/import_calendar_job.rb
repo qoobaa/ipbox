@@ -35,5 +35,6 @@ class ImportCalendarJob < ApplicationJob
         end
       end
     end
+    ActionCable.server.broadcast("imports-#{project.id}", entries: project.entries.size)
   end
 end

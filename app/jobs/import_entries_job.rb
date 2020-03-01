@@ -7,7 +7,8 @@ class ImportEntriesJob < ApplicationJob
         attributes[:hours] = 0.5
       end
     end
-    entries = Entry.create(attributes)
-    entries.select(&:valid?)
+    entries = Entry.create(attributes).select(&:valid?)
+    CalculateHoursJob.perform_now
+    ActionCable.server.broadcast("imports-#{project.id}", entries: entries.size)
   end
 end
