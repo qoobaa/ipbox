@@ -29,7 +29,7 @@ services:
       - "redis_data:/data"
 
   app: &app_base
-    image: "treatwell/app:staging"
+    image: "docker.pkg.github.com/qoobaa/ipbox/app:staging"
     build:
       context: .
       args:
@@ -62,17 +62,6 @@ services:
       test: "ps ax | grep -v grep | grep sidekiq"
       interval: "1m"
 
-  metabase:
-    hostname: "metabase.ipbox.kuzma.dev"
-    image: "metabase/metabase"
-    deploy:
-      restart_policy:
-        condition: "on-failure"
-    env_file:
-      - ".env.staging"
-    depends_on:
-      - "postgres"
-
   caddy:
     hostname: "caddy.ipbox.kuzma.dev"
     image: "abiosoft/caddy:latest"
@@ -90,7 +79,6 @@ services:
         echo "
         ipbox.kuzma.dev
         proxy / app:3000 { transparent }
-        proxy /metabase metabase:3000 { without /metabase }
         " > /etc/Caddyfile
         caddy --conf /etc/Caddyfile --log stdout
     deploy:
