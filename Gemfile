@@ -5,8 +5,6 @@ ruby "2.6.5"
 
 # gem "bcrypt", "~> 3.1.7"
 # gem "image_processing", "~> 1.2"
-gem "sidekiq", require: ["sidekiq", "sidekiq/web"]
-gem "sprockets", "~> 3"
 gem "devise"
 gem "icalendar"
 gem "jbuilder"
@@ -20,6 +18,8 @@ gem "ransack"
 gem "redis"
 gem "rubyzip", require: "zip"
 gem "sass-rails"
+gem "sidekiq", require: ["sidekiq", "sidekiq/web"]
+gem "sprockets", "~> 3"
 gem "turbolinks"
 gem "webpacker"
 
