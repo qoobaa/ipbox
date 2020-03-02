@@ -8,13 +8,16 @@ Bundler.require(*Rails.groups)
 
 module Ipbox
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.
+    if ENV["RAILS_LOG_TO_STDOUT"].present?
+      logger = ActiveSupport::Logger.new(STDOUT)
+      logger.formatter = config.log_formatter
+      config.logger = ActiveSupport::TaggedLogging.new(logger)
+      config.log_level = ENV.fetch("LOG_LEVEL", "debug")
+      config.log_tags = [:subdomain, :uuid]
+    end
+
     config.time_zone = "Europe/Warsaw"
     config.i18n.default_locale = :pl
     config.i18n.available_locales = :pl
