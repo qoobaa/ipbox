@@ -18,7 +18,7 @@ jobs:
       #   run: docker login -u $DOCKER_USERNAME
 
       - name: Build Docker image
-        run: docker build -t ipbox/app:${GITHUB_REF##*/} --build-arg BUNDLE_WITHOUT="development test" --build-arg FOLDERS_TO_REMOVE="test node_modules app/assets vendor/assets lib/assets tmp/cache .docker .github" --build-arg RAILS_ENV="production" --build-arg EXECJS_RUNTIME=Disabled .
+        run: docker build -t docker.pkg.github.com/qoobaa/ipbox/app:${GITHUB_REF##*/} ipbox/app:${GITHUB_REF##*/} --build-arg BUNDLE_WITHOUT="development test" --build-arg FOLDERS_TO_REMOVE="test node_modules app/assets vendor/assets lib/assets tmp/cache .docker .github" --build-arg RAILS_ENV="production" --build-arg EXECJS_RUNTIME=Disabled .
 
       - name: Push Docker image
         run: docker push docker.pkg.github.com/qoobaa/ipbox/app:${GITHUB_REF##*/}
