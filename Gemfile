@@ -16,6 +16,7 @@ gem "rails"
 gem "rails-i18n"
 gem "ransack"
 gem "redis"
+gem "rollbar"
 gem "rubyzip", require: "zip"
 gem "sass-rails"
 gem "sidekiq", require: ["sidekiq", "sidekiq/web"]
