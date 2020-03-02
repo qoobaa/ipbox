@@ -1,0 +1,105 @@
+version: "3.7"
+
+services:
+  postgres:
+    hostname: "postgres.ipbox.kuzma.dev"
+    image: "postgres:12.1-alpine"
+    deploy:
+      restart_policy:
+        condition: "on-failure"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: "30s"
+      timeout: "30s"
+    env_file:
+      - ".env.staging"
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+
+  redis:
+    hostname: "redis.ipbox.kuzma.dev"
+    image: "redis:alpine"
+    deploy:
+      restart_policy:
+        condition: "on-failure"
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 6379 || exit 1"]
+      interval: "30s"
+    volumes:
+      - "redis_data:/data"
+
+  app: &app_base
+    image: "treatwell/app:staging"
+    build:
+      context: .
+      args:
+        FOLDERS_TO_REMOVE: "test node_modules app/assets vendor/assets lib/assets tmp/cache"
+        BUNDLE_WITHOUT: "development:test"
+        EXECJS_RUNTIME: "Disabled"
+        RAILS_ENV: "staging"
+    hostname: "app.ipbox.kuzma.dev"
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: "on-failure"
+    env_file:
+      - ".env.staging"
+    depends_on:
+      - "postgres"
+      - "redis"
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
+      interval: "1m"
+
+  sidekiq:
+    <<: *app_base
+    deploy:
+      restart_policy:
+        condition: "on-failure"
+    command: "bundle exec sidekiq"
+    hostname: "sidekiq.ipbox.kuzma.dev"
+    healthcheck:
+      test: "ps ax | grep -v grep | grep sidekiq"
+      interval: "1m"
+
+  metabase:
+    hostname: "metabase.ipbox.kuzma.dev"
+    image: "metabase/metabase"
+    deploy:
+      restart_policy:
+        condition: "on-failure"
+    env_file:
+      - ".env.staging"
+    depends_on:
+      - "postgres"
+
+  caddy:
+    hostname: "caddy.ipbox.kuzma.dev"
+    image: "abiosoft/caddy:latest"
+    depends_on:
+      - "app"
+      - "metabase"
+    ports:
+      - "80:80"
+      - "443:443"
+    entrypoint: ["/bin/sh", "-c"]
+    volumes:
+      - "caddy_data:/root/.caddy"
+    command:
+      - |
+        echo "
+        ipbox.kuzma.dev
+        proxy / app:3000 { transparent }
+        proxy /metabase metabase:3000 { without /metabase }
+        " > /etc/Caddyfile
+        caddy --conf /etc/Caddyfile --log stdout
+    deploy:
+      restart_policy:
+        condition: "on-failure"
+      placement:
+        constraints: [node.role == manager]
+
+volumes:
+  postgres_data:
+  redis_data:
+  caddy_data:

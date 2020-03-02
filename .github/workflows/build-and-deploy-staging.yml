@@ -1,0 +1,44 @@
+name: Build and deploy staging
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    needs: tests
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      # - name: Docker login
+      #   run: docker login -u $DOCKER_USERNAME
+
+      - name: Build Docker image
+        run: docker build -t ipbox/app:${GITHUB_REF##*/} --build-arg BUNDLE_WITHOUT="development test" --build-arg FOLDERS_TO_REMOVE="test node_modules app/assets vendor/assets lib/assets tmp/cache .docker .github" --build-arg RAILS_ENV="production" --build-arg EXECJS_RUNTIME=Disabled .
+
+      - name: Push Docker image
+        run: docker push docker.pkg.github.com/qoobaa/ipbox/app:${GITHUB_REF##*/}
+
+  deploy-staging:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_REMOTE_HOST: tcp://51.83.248.131:2376
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Docker Login
+        run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-staging/ca.pem --tlscert=.docker/machines/ipbox-staging/cert.pem --tlskey=.docker/machines/ipbox-staging/key.pem login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Deploy to Swarm
+        run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-staging/ca.pem --tlscert=.docker/machines/ipbox-staging/cert.pem --tlskey=.docker/machines/ipbox-staging/key.pem stack deploy --compose-file docker-compose.staging.yml ipbox_staging --with-registry-auth --prune
+
+      - name: Prune
+        run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-staging/ca.pem --tlscert=.docker/machines/ipbox-staging/cert.pem --tlskey=.docker/machines/ipbox-staging/key.pem system prune -a -f
