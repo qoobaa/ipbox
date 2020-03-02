@@ -5,6 +5,7 @@ ruby '2.6.5'
 
 # gem 'bcrypt', '~> 3.1.7'
 # gem 'image_processing', '~> 1.2'
+gem "sprockets", "~> 3"
 gem 'devise'
 gem 'icalendar'
 gem 'jbuilder'
@@ -20,7 +21,6 @@ gem 'rubyzip', require: 'zip'
 gem 'sass-rails'
 gem 'turbolinks'
 gem 'webpacker'
-gem "sprockets", "~> 3"
 
 gem 'bootsnap', require: false
 
