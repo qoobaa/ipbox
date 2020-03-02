@@ -20,6 +20,7 @@ gem 'rubyzip', require: 'zip'
 gem 'sass-rails'
 gem 'turbolinks'
 gem 'webpacker'
+gem "sprockets", "~> 3"
 
 gem 'bootsnap', require: false
 
