@@ -9,9 +9,9 @@ class EntriesController < ApplicationController
     @entries =
       @q.result
         .includes(:invoice, :project)
-        .order(ended_at: :asc)
         .by_year(2019)
         .page(params[:page])
+        .order(:ended_at, :id)
     @update_entries_form = UpdateEntriesForm.new(entries: @entries)
   end
 

@@ -1,17 +1,11 @@
 (function () {
-  var entryNode = document.getElementById("entry_<%= @entry.id %>")
   var form = document.getElementById("edit_entry_<%= @entry.id %>");
 
-  if (form) {
-    form.innerHTML = "<%= j render('form', entry: @entry) %>";
-  }
-
   <% if @entry.valid? %>
-    if (entryNode) {
-      jQuery(form).modal("hide");
-      entryNode.innerHTML = "<%= j render(@entry) %>";
-    } else {
-      Turbolinks.visit(window.location);
+    Turbolinks.visit(window.location);
+  <% else %>
+    if (form) {
+      form.innerHTML = "<%= j render('form', entry: @entry) %>";
     }
   <% end %>
 })();

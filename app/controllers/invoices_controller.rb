@@ -8,7 +8,7 @@ class InvoicesController < ApplicationController
   def show
     @invoice = @user.invoices.find(params[:id])
     @projects = @user.projects
-    @entries_by_day = @invoice.entries.order(ended_at: :asc).group_by(&:day)
+    @entries_by_day = @invoice.entries.order(:ended_at, :id).group_by(&:day)
   end
 
   def create
