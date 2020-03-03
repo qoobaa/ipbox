@@ -25,14 +25,13 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       DOCKER_REMOTE_HOST: tcp://51.83.248.131:2376
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
       - name: Docker Login
-        run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-staging/ca.pem --tlscert=.docker/machines/ipbox-staging/cert.pem --tlskey=.docker/machines/ipbox-staging/key.pem login -u qoobaa -p $GITHUB_TOKEN docker.pkg.github.com
+        run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-staging/ca.pem --tlscert=.docker/machines/ipbox-staging/cert.pem --tlskey=.docker/machines/ipbox-staging/key.pem login -u qoobaa -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
 
       - name: Deploy to Swarm
         run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-staging/ca.pem --tlscert=.docker/machines/ipbox-staging/cert.pem --tlskey=.docker/machines/ipbox-staging/key.pem stack deploy --compose-file docker-compose.staging.yml ipbox_staging --with-registry-auth --prune
