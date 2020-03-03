@@ -2,19 +2,28 @@
   <div class="col">
     <h2>
       Faktura <%= @invoice.number %>
-      <span class="badge badge-success"><%= number_to_percentage(@invoice.ratio * 100, precision: 0) %> programowanie</span>
-      <span class="badge badge-secondary"><%= number_to_percentage((1 - @invoice.ratio) * 100, precision: 0) %> utrzymanie</span>
     </h2>
+  </div>
+  <div class="col d-print-none text-right">
+    <a href="javascript:window.print()" class="btn btn-info">Drukuj ewidencję</a>
   </div>
 </div>
 
 <table class="table table-sm" id="entries">
   <thead>
     <tr>
-      <th class="text-center">Data</th>
-      <th class="text-center">Opis</th>
-      <th class="text-center">Typ</th>
-      <th class="text-right">Liczba godzin</th>
+      <th class="text-center">
+        Data
+      </th>
+      <th class="text-center">
+        Opis
+      </th>
+      <th class="text-center">
+        Typ
+      </th>
+      <th class="text-right">
+        Liczba godzin
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -36,7 +45,8 @@
             <% end %>
             <td>
               <%= render "entries/form", entry: entry %>
-              <%= link_to entry.description, "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
+              <%= link_to entry.description, "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"}, class: "d-print-none" %>
+              <span class="d-none d-print-block"><%= entry.description %></span>
             </td>
             <td class="text-center">
               <% if entry.development? %>
@@ -54,4 +64,54 @@
       <% end %>
     <% end %>
   </tbody>
+  <tfoot>
+    <tr>
+      <th class="text-right" colspan="3">
+        Liczba zafakturowanych godzin
+      </th>
+      <td class="text-right">
+        <%= @invoice.hours %>
+      </td>
+    </tr>
+    <tr>
+      <th class="text-right" colspan="3">
+        Liczba zaraportowanych godzin
+      </th>
+      <td class="text-right">
+        <%= @invoice.entries.sum(:hours) %>
+      </td>
+    </tr>
+    <tr>
+      <th class="text-right" colspan="3">
+        Liczba zaraportowanych godzin programowania
+      </th>
+      <td class="text-right">
+        <%= @invoice.entries.development.sum(:hours) %>
+      </td>
+    </tr>
+    <tr>
+      <th class="text-right" colspan="3">
+        Liczba zaraportowanych godzin utrzymania
+      </th>
+      <td class="text-right">
+        <%= @invoice.entries.maintenance.sum(:hours) %>
+      </td>
+    </tr>
+    <tr>
+      <th class="text-right" colspan="3">
+        Procent programowania
+      </th>
+      <td class="text-right">
+        <%= number_to_percentage(@invoice.ratio * 100, precision: 0) %>
+      </td>
+    </tr>
+    <tr>
+      <th class="text-right" colspan="3">
+        Procent utrzymania
+      </th>
+      <td class="text-right">
+        <%= number_to_percentage((1 - @invoice.ratio) * 100, precision: 0) %>
+      </td>
+    </tr>
+  </tfoot>
 </table>

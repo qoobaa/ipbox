@@ -5,8 +5,8 @@ Rails.application.routes.draw do
       post :update_all
     end
   end
-  resources :invoices, only: [:index, :show, :new, :create, :edit, :update]
-  resources :projects, only: [:index, :new, :create, :edit] do
+  resources :invoices, only: [:index, :show, :create, :edit, :update, :destroy]
+  resources :projects, only: [:index, :create, :edit, :update, :destroy] do
     member do
       post :import
       put :upload

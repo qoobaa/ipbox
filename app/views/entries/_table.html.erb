@@ -3,12 +3,30 @@
 <table class="table table-hover table-sm" id="entries">
   <thead>
     <tr>
-      <th>Data</th>
-      <th>Opis</th>
-      <th class="text-center">Projekt</th>
-      <th class="text-center">Faktura</th>
-      <th class="text-center">Typ</th>
-      <th class="text-right">Liczba godzin</th>
+      <th>
+        Data
+        <span class="hover-only"><%= octicon "pencil" %></span>
+      </th>
+      <th>
+        Opis
+        <span class="hover-only"><%= octicon "pencil" %></span>
+      </th>
+      <th class="text-center">
+        Projekt
+        <span class="hover-only"><%= octicon "pencil" %></span>
+      </th>
+      <th class="text-center">
+        Faktura
+        <span class="hover-only"><%= octicon "pencil" %></span>
+      </th>
+      <th class="text-center">
+        Typ
+        <span class="hover-only"><%= octicon "pencil" %></span>
+      </th>
+      <th class="text-right">
+        Liczba godzin
+        <span class="hover-only"><%= octicon "pencil" %></span>
+      </th>
     </tr>
   </thead>
   <% if @entries.count > 0 %>

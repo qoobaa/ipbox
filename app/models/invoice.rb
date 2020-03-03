@@ -1,5 +1,5 @@
 class Invoice < ApplicationRecord
-  has_many :entries
+  has_many :entries, dependent: :nullify
   belongs_to :user
 
   validates :number, presence: true
