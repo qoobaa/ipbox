@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :entries, only: [:index, :create, :update, :destroy] do
     collection do
       post :update_all
+      delete :destroy_all
     end
   end
   resources :invoices, only: [:index, :show, :create, :edit, :update, :destroy]

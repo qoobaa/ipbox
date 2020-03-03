@@ -45,3 +45,4 @@ pl:
     many: "%{count} wpisów"
   maintenance: "utrzymanie"
   development: "programowanie"
+  back: Wstecz
