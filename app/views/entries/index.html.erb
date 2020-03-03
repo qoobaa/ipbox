@@ -6,30 +6,30 @@
   <%= search_form_for @q, url: entries_path, method: :get, remote: true do |form| %>
     <div class="form-row">
       <div class="col">
-        <%= form.search_field :description_cont, class: "form-control", placeholder: "Opis", autocomplete: "off" %>
+        <%= form.search_field :description_cont, class: "form-control form-control-sm", placeholder: "Opis", autocomplete: "off" %>
       </div>
       <div class="col">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <%= link_to "<", entries_path(q: params.fetch(:q, {}).to_unsafe_h.merge(day_eq: form.object.day_eq&.advance(days: -1))), class: "btn btn-secondary #{'disabled' if form.object.day_eq.blank?}" %>
+            <%= link_to "<", entries_path(q: params.fetch(:q, {}).to_unsafe_h.merge(day_eq: form.object.day_eq&.advance(days: -1))), class: "btn btn-sm btn-secondary #{'disabled' if form.object.day_eq.blank?}" %>
           </div>
-          <%= form.date_field :day_eq, class: "form-control", autocomplete: "off", value: form.object.day_eq, min: "2019-01-01", max: "2019-12-31" %>
+          <%= form.date_field :day_eq, class: "form-control form-control-sm", autocomplete: "off", value: form.object.day_eq, min: "2019-01-01", max: "2019-12-31" %>
           <div class="input-group-append">
-            <%= link_to ">", entries_path(q: params.fetch(:q, {}).to_unsafe_h.merge(day_eq: form.object.day_eq&.advance(days: 1))), class: "btn btn-secondary #{'disabled' if form.object.day_eq.blank?}" %>
+            <%= link_to ">", entries_path(q: params.fetch(:q, {}).to_unsafe_h.merge(day_eq: form.object.day_eq&.advance(days: 1))), class: "btn btn-sm btn-secondary #{'disabled' if form.object.day_eq.blank?}" %>
           </div>
         </div>
       </div>
       <div class="col">
-        <%= form.collection_select :project_id_eq, Project.all, :id, :name, {include_blank: "Dowolny projekt"}, class: "form-control", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
+        <%= form.collection_select :project_id_eq, Project.all, :id, :name, {include_blank: "Dowolny projekt"}, class: "form-control form-control-sm", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
       </div>
       <div class="col">
-        <%= form.collection_select :invoice_id_eq, Invoice.all, :id, :number, {include_blank: "Dowolna faktura"}, class: "form-control", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
+        <%= form.collection_select :invoice_id_eq, Invoice.all, :id, :number, {include_blank: "Dowolna faktura"}, class: "form-control form-control-sm", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
       </div>
       <div class="col">
-        <%= form.submit "Filtruj", class: "btn btn-primary btn-block" %>
+        <%= form.submit "Filtruj", class: "btn btn-primary btn-sm btn-block" %>
       </div>
       <div class="col-1">
-        <%= link_to "&times;".html_safe, entries_path, type: "button", class: "btn btn-secondary btn-block", data: {remote: true} %>
+        <%= link_to "&times;".html_safe, entries_path, type: "button", class: "btn btn-secondary btn-sm btn-block", data: {remote: true} %>
       </div>
     </div>
   <% end %>
