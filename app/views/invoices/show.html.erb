@@ -27,9 +27,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @invoice.period.each do |day| %>
-      <% entries = @invoice.entries.where(day: day).order(ended_at: :asc) %>
-      <% total_hours = entries.sum(:hours) %>
+    <% @entries_by_day.each do |day, entries| %>
       <% if entries.present? %>
         <% entries.each.with_index do |entry, i| %>
           <tr>
@@ -39,7 +37,7 @@
                   <%= l day, format: "%A, %-d %B %Y" %>
                 </div>
                 <div>
-                  <%= entries.sum(:hours) %> godzin
+                  <%= entries.sum(&:hours) %> godzin
                 </div>
               </td>
             <% end %>
