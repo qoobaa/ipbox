@@ -38,4 +38,15 @@
       <td colspan="6" class="text-center text-muted">Nie masz żadnych wpisów</td>
     </tr>
   <% end %>
+  <tfoot>
+    <tr>
+      <th colspan="5" class="text-right">
+        Suma
+      </th>
+      <td class="text-right">
+        <%= @entries.except(:limit, :offset).sum(:hours) %>
+        <span class="hover-only"><%= octicon "pencil" %></span>
+      </td>
+    </tr>
+  </tfoot>
 </table>
