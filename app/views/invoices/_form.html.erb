@@ -1,31 +1,48 @@
-<%= form_for invoice, remote: true do |form| %>
-  <fieldset>
-    <div class="form-group">
-      <%= form.label :number, class: "form-label" %>
-      <%= form.text_field :number, class: "form-control", autocomplete: "off" %>
-      <%= bootstrap_invalid_feedback_for(form.object, :number) %>
-    </div>
+<%= form_for invoice, html: {class: "modal", tabindex: -1, role: "dialog"}, data: {remote: true} do |form| %>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <% if form.object.new_record? %>
+            Nowa faktura
+          <% else %>
+            Edytuj fakturę
+          <% end %>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><%= octicon "x" %></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <%= form.label :number, class: "form-label" %>
+          <%= form.text_field :number, class: "form-control", autocomplete: "off" %>
+          <%= bootstrap_invalid_feedback_for(form.object, :number) %>
+        </div>
 
-    <div class="form-group">
-      <%= form.label :from, class: "form-label" %>
-      <%= form.date_field :from, class: "form-control", value: @last_invoice&.to&.advance(days: 1) || "2019-01-01", autocomplete: "off" %>
-      <%= bootstrap_invalid_feedback_for(form.object, :from) %>
-    </div>
+        <div class="form-group">
+          <%= form.label :from, class: "form-label" %>
+          <%= form.date_field :from, class: "form-control", autocomplete: "off" %>
+          <%= bootstrap_invalid_feedback_for(form.object, :from) %>
+        </div>
 
-    <div class="form-group">
-      <%= form.label :to, class: "form-label" %>
-      <%= form.date_field :to, class: "form-control", autocomplete: "off" %>
-      <%= bootstrap_invalid_feedback_for(form.object, :to) %>
-    </div>
+        <div class="form-group">
+          <%= form.label :to, class: "form-label" %>
+          <%= form.date_field :to, class: "form-control", autocomplete: "off" %>
+          <%= bootstrap_invalid_feedback_for(form.object, :to) %>
+        </div>
 
-    <div class="form-group">
-      <%= form.label :hours, class: "form-label" %>
-      <%= form.number_field :hours, class: "form-control", step: 0.5, min: 0, autocomplete: "off" %>
-      <%= bootstrap_invalid_feedback_for(form.object, :hours) %>
+        <div class="form-group">
+          <%= form.label :hours, class: "form-label" %>
+          <%= form.number_field :hours, class: "form-control", step: 0.5, min: 0, autocomplete: "off" %>
+          <%= bootstrap_invalid_feedback_for(form.object, :hours) %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <%= link_to "Usuń", invoice_path(form.object), class: "btn btn-danger", data: {method: :delete, confirm: "Czy na pewno usunąć tę fakturę?", remote: true} if form.object.persisted? %>
+        <%= form.submit "Zapisz", class: "btn btn-primary" %>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+      </div>
     </div>
-
-    <div class="form-group">
-      <%= form.submit "Create Invoice", class: "btn btn-success" %>
-    </div>
-  </fieldset>
+  </div>
 <% end %>

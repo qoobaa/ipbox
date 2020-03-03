@@ -1,3 +1,5 @@
+<%= render partial: "invoices/form", collection: @invoices, as: :invoice %>
+
 <table class="table" id="invoices">
   <thead>
     <tr>
@@ -6,6 +8,7 @@
       <th class="text-right">Liczba zafakturowanych godzin</th>
       <th class="text-right">Liczba zalogowanych godzin</th>
       <th class="text-right">Procent</th>
+      <th class="text-right"></th>
     </tr>
   </thead>
   <% if @invoices.count > 0 %>

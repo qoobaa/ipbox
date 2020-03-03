@@ -6,9 +6,6 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = @user.projects.all
-  end
-
-  def new
     @project = @user.projects.build
   end
 
@@ -16,6 +13,13 @@ class ProjectsController < ApplicationController
     @project = @user.projects.build(project_params)
     if @project.save
       redirect_to edit_project_path(@project)
+    end
+  end
+
+  def update
+    @project = @user.projects.find(params[:id])
+    if @project.update(project_params)
+      redirect_to projects_path
     end
   end
 
@@ -39,6 +43,12 @@ class ProjectsController < ApplicationController
     @project.update(file: params[:project][:file])
     ImportCalendarJob.perform_later(@project)
     head :ok
+  end
+
+  def destroy
+    @project = @user.projects.find(params[:id])
+    @project.destroy
+    redirect_to projects_path
   end
 
   private

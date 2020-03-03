@@ -8,5 +8,7 @@
 <%= render "table" %>
 
 <div class="text-right">
-  <%= link_to "Nowy", new_project_path, class: "btn btn-success" %>
+  <%= link_to "Nowy", "javascript:void(0)", class: "btn btn-success", data: {toggle: "modal", target: "#new_project"} %>
 </div>
+
+<%= render "form", project: @project %>

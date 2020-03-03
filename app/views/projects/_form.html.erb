@@ -1,19 +1,36 @@
-<%= form_for project, remote: true do |form| %>
-  <fieldset>
-    <div class="form-group">
-      <%= form.label :name, class: "form-label" %>
-      <%= form.text_field :name, class: "form-control" %>
-      <%= bootstrap_invalid_feedback_for(form.object, :name) %>
-    </div>
+<%= form_for project, html: {class: "modal", tabindex: -1, role: "dialog"}, data: {remote: true} do |form| %>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <% if form.object.new_record? %>
+            Nowy projekt
+          <% else %>
+            Edytuj projekt
+          <% end %>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><%= octicon "x" %></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <%= form.label :name, class: "form-label" %>
+          <%= form.text_field :name, class: "form-control", autocomplete: "off" %>
+          <%= bootstrap_invalid_feedback_for(form.object, :name) %>
+        </div>
 
-    <div class="form-group">
-      <%= form.label :default_type, class: "form-label" %>
-      <%= form.collection_select :default_type, Project.default_types.keys.map { |type| [type, t(type)] }, :first, :second, {prompt: true}, class: "form-control" %>
-      <%= bootstrap_invalid_feedback_for(form.object, :default_type) %>
+        <div class="form-group">
+          <%= form.label :default_type, class: "form-label" %>
+          <%= form.collection_select :default_type, Project.default_types.keys.map { |type| [type, t(type)] }, :first, :second, {prompt: true}, class: "form-control", autocomplete: "off" %>
+          <%= bootstrap_invalid_feedback_for(form.object, :default_type) %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <%= link_to "Usuń", project_path(form.object), class: "btn btn-danger", data: {method: :delete, confirm: "Czy na pewno usunąć ten projekt?", remote: true} if form.object.persisted? %>
+        <%= form.submit "Zapisz", class: "btn btn-primary" %>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+      </div>
     </div>
-
-    <div class="form-group">
-      <%= form.submit "Utwórz projekt", class: "btn btn-success" %>
-    </div>
-  </fieldset>
+  </div>
 <% end %>

@@ -16,7 +16,8 @@
       <%= link_to entry.invoice.number, entries_path(q: {invoice_id_eq: entry.invoice_id}) %>
       <span class="hover-only"><%= octicon "search" %></span>
     <% else %>
-      <small class='text-muted'>unassigned</small>
+      <small class='text-muted'>nieprzypisany</small>
+      <span class="invisible"><%= octicon "search" %></span>
     <% end %>
   </td>
   <td class="text-center">

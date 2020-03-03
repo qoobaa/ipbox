@@ -1,8 +1,19 @@
+<%= render partial: "projects/form", collection: @projects, as: :project %>
+
 <table class="table" id="projects">
   <thead>
     <tr>
-      <th>Nazwa</th>
-      <th class="text-center">Liczba wpisów</th>
+      <th>
+        Nazwa
+        <span class="hover-only"><%= octicon "pencil" %></span>
+      </th>
+      <th class="text-center">
+        Liczba wpisów
+        <span class="hover-only"><%= octicon "pencil" %></span>
+      </th>
+      <th class="text-center">
+        Liczba godzin
+      </th>
       <th class="text-right"></th>
     </tr>
   </thead>
