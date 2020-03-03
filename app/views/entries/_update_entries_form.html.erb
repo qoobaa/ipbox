@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <%= link_to "Usuń", destroy_all_entries_path(q: params.fetch(:q, {}).to_unsafe_hash), class: "btn btn-danger", data: {method: :delete, confirm: "Czy na pewno usunąć te wpisy?", remote: true} %>
+        <%= link_to "Usuń", destroy_all_entries_path(q: params.fetch(:q, {}).to_unsafe_hash), class: "btn btn-danger", data: {method: :delete, confirm: "Czy na pewno usunąć #{form.object.entries_count} wpisów?", remote: true} %>
         <%= form.submit "Zmień", class: "btn btn-primary", data: {confirm: "Zmienione zostanie #{form.object.entries_count} wpisów. Kontynuować?"} %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
       </div>

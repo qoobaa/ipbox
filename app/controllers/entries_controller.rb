@@ -41,8 +41,7 @@ class EntriesController < ApplicationController
   def destroy_all
     @projects = @user.projects
     @q = @user.entries.ransack(params[:q])
-    @entries = @q.result.by_year(2019)
-    @entries.destroy_all
+    @entries = @q.result.by_year(2019).except(:limit, :offset).destroy_all
     redirect_to entries_path(q: params.fetch(:q, {}).to_unsafe_hash)
   end
 
