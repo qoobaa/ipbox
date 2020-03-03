@@ -8,14 +8,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
       - name: Docker login
-        run: docker login -u qoobaa -p $GITHUB_TOKEN docker.pkg.github.com
+        run: docker login -u qoobaa -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
 
       - name: Build Docker image
         run: docker build -t docker.pkg.github.com/qoobaa/ipbox/app:${GITHUB_REF##*/} --build-arg BUNDLE_WITHOUT="development test" --build-arg FOLDERS_TO_REMOVE="test node_modules app/assets vendor/assets lib/assets tmp/cache .docker .github" --build-arg RAILS_ENV="production" --build-arg EXECJS_RUNTIME=Disabled .
