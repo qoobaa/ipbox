@@ -38,6 +38,14 @@ class EntriesController < ApplicationController
     end
   end
 
+  def destroy_all
+    @projects = @user.projects
+    @q = @user.entries.ransack(params[:q])
+    @entries = @q.result.by_year(2019)
+    @entries.destroy_all
+    redirect_to entries_path(q: params.fetch(:q, {}).to_unsafe_hash)
+  end
+
   def destroy
     @entry = @user.entries.find(params[:id])
     @entry.destroy
