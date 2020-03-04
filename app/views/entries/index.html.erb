@@ -1,8 +1,17 @@
-<div class="my-3">
-  <h2 class="my-3">
-    Wpisy
-  </h2>
+<h2 class="my-3">
+  Wpisy
+</h2>
 
+<% if @invoice.present? %>
+  <% invoiced_hours = @invoice.hours %>
+  <% logged_hours = @invoice.entries.sum(:hours) %>
+
+  <div class="alert <%= "alert-success" if invoiced_hours == logged_hours %> <%= "alert-warning" if invoiced_hours > logged_hours %> <%= "alert-danger" if invoiced_hours < logged_hours %>" role="alert">
+    Faktura <%= @invoice.number %> -  zafakturowano: <%= invoiced_hours %>h, zalogowano: <%= logged_hours %>h
+  </div>
+<% end %>
+
+<div class="my-3">
   <%= search_form_for @q, url: entries_path, method: :get, remote: true do |form| %>
     <div class="form-row">
       <div class="col">
