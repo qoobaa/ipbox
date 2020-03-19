@@ -14,7 +14,7 @@ class EntriesController < ApplicationController
         .order(:ended_at, :id)
     @update_entries_form = UpdateEntriesForm.new(entries: @entries)
     invoice_ids = @entries.distinct.except(:limit, :offset, :order).pluck(:invoice_id)
-    @invoice = Invoice.find(invoice_ids.first) if invoice_ids.size == 1
+    @invoice = Invoice.find_by(id: invoice_ids.first) if invoice_ids.size == 1
   end
 
   def create
