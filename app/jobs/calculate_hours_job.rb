@@ -16,6 +16,10 @@ class CalculateHoursJob < ApplicationJob
         .where(exact: false)
         .where("hours = (SELECT MAX(hours) FROM entries e WHERE e.day = entries.day)")
         .update_all("hours = 8 - LEAST(8, (SELECT COALESCE(SUM(hours), 0) FROM entries e WHERE entries.day = e.day AND entries.id != e.id))")
+      Entry
+        .where(exact: false)
+        .where(hours: nil)
+        .update_all("hours = 1")
     end
   end
 end

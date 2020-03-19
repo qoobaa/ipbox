@@ -2,6 +2,7 @@
   var form = document.getElementById("edit_entry_<%= @entry.id %>");
 
   <% if @entry.valid? %>
+    Turbolinks.clearCache();
     Turbolinks.visit(window.location);
   <% else %>
     if (form) {

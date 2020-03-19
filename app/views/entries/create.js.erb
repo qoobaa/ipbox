@@ -3,6 +3,7 @@
 
   <% if @entry.valid? %>
     jQuery(form).modal("hide");
+    Turbolinks.clearCache();
     Turbolinks.visit(window.location);
   <% else %>
     form.innerHTML = "<%= j render('form', entry: @entry) %>";
