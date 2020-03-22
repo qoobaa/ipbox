@@ -24,6 +24,6 @@ class Invoice < ApplicationRecord
   private
 
   def associate_entries
-    Entry.where(day: period).update_all(invoice_id: id)
+    user.entries.where(day: period).update_all(invoice_id: id)
   end
 end
