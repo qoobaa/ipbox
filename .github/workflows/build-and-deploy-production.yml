@@ -35,7 +35,7 @@ jobs:
         run: docker login -u qoobaa -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
 
       - name: Deploy to Swarm
-        run: docker stack deploy --with-registry-auth --prune --compose-file docker-compose.production.yml ipbox_production
+        run: docker stack deploy --with-registry-auth --prune --resolve-image changed --compose-file docker-compose.production.yml ipbox_production
 
       - name: Prune
         run: docker system prune -a -f
