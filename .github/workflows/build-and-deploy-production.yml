@@ -31,12 +31,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Docker Login
-        run: docker login -u qoobaa -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
-
-      - name: Docker Pull
-        run: docker-compose -f docker-compose.production.yml pull
-
       - name: Deploy to Swarm
         run: docker stack deploy --with-registry-auth --prune --compose-file docker-compose.production.yml ipbox_production
 
