@@ -1,5 +1,5 @@
 class EntriesController < ApplicationController
-  before_action :assign_user
+  before_action :assign_user, :assign_projects, :assign_invoices
 
   def index
     @entry = @user.entries.build
@@ -18,18 +18,15 @@ class EntriesController < ApplicationController
   end
 
   def create
-    @projects = @user.projects
     @entry = @user.entries.create(entry_params)
   end
 
   def update
-    @projects = @user.projects
     @entry = @user.entries.find(params[:id])
     @entry.update(entry_params)
   end
 
   def update_all
-    @projects = @user.projects
     @q = @user.entries.ransack(params[:q])
     @entries = @q.result.by_year(2019)
     @update_entries_form = UpdateEntriesForm.new(update_entries_form_params)
@@ -56,6 +53,14 @@ class EntriesController < ApplicationController
 
   def assign_user
     @user = current_user
+  end
+
+  def assign_projects
+    @projects = @user.projects
+  end
+
+  def assign_invoices
+    @invoices = @user.invoices
   end
 
   def entry_params
