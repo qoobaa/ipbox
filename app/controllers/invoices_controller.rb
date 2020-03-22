@@ -37,7 +37,7 @@ class InvoicesController < ApplicationController
     @user = current_user
   end
 
-  def assign_invoice
+  def assign_invoices
     @invoices = @user.invoices
   end
 
