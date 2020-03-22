@@ -34,11 +34,11 @@
               <%= link_to current_user.email, edit_user_registration_path, class: "nav-link" %>
             </li>
             <li class="nav-item">
-              <%= link_to "Logout", destroy_user_session_path, data: {method: :delete}, class: "nav-link" %>
+              <%= link_to "Wyloguj się", destroy_user_session_path, data: {method: :delete}, class: "nav-link" %>
             </li>
           <% else %>
             <li class="nav-item">
-              <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+              <%= link_to "Zaloguj się", new_user_session_path, class: "nav-link" %>
             </li>
           <% end %>
         </ul>
@@ -48,7 +48,7 @@
     <div class="container my-3">
       <% flash.each do |type, message| %>
         <div class="alert alert-dismissible <%= bootstrap_class_for(type) %>" role="alert">
-          <button class="close" data-dismiss="alert" aria-label="Close">×</button>
+          <button class="close" data-dismiss="alert" aria-label="Zamknij">×</button>
           <%= message %>
         </div>
       <% end %>
