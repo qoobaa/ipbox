@@ -67,7 +67,6 @@ services:
     image: "abiosoft/caddy:latest"
     depends_on:
       - "app"
-      - "metabase"
     ports:
       - "80:80"
       - "443:443"
