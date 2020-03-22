@@ -1,15 +1,13 @@
 # Stage: Builder
 FROM ruby:2.6.5-alpine as Builder
 
-ARG FOLDERS_TO_REMOVE
-ARG BUNDLE_WITHOUT
 ARG RAILS_ENV
 
 ENV INSTALL_PATH=/app\
     SECRET_KEY_BASE=secret-key-base\
     RAILS_ENV=${RAILS_ENV}\
     RAILS_SERVE_STATIC_FILES=true\
-    BUNDLE_WITHOUT=${BUNDLE_WITHOUT}
+    BUNDLE_WITHOUT=development test
 
 RUN apk add --update --no-cache \
     build-base \
@@ -40,7 +38,7 @@ COPY . .
 
 RUN bundle exec rails assets:precompile
 
-RUN rm -rf $FOLDERS_TO_REMOVE
+RUN rm -rf test node_modules app/assets vendor/assets lib/assets tmp/cache .docker .github
 RUN mkdir -p $INSTALL_PATH/tmp/pids
 
 # Stage: Final
@@ -52,7 +50,7 @@ ARG EXECJS_RUNTIME
 ENV INSTALL_PATH=/app \
     RAILS_LOG_TO_STDOUT=true\
     RAILS_SERVE_STATIC_FILES=true\
-    EXECJS_RUNTIME=$EXECJS_RUNTIME
+    EXECJS_RUNTIME=Disabled
 
 RUN apk add --update --no-cache\
     postgresql-client\
