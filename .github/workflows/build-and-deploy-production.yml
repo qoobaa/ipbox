@@ -24,16 +24,18 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     env:
-      DOCKER_REMOTE_HOST: tcp://51.83.254.158:2376
+      DOCKER_HOST: tcp://51.83.254.158:2376
+      DOCKER_TLS_VERIFY: 1
+      DOCKER_CERT_PATH: .docker/machines/ipbox-production
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
       - name: Docker Login
-        run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-production/ca.pem --tlscert=.docker/machines/ipbox-production/cert.pem --tlskey=.docker/machines/ipbox-production/key.pem login -u qoobaa -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
+        run: docker login -u qoobaa -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
 
       - name: Deploy to Swarm
-        run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-production/ca.pem --tlscert=.docker/machines/ipbox-production/cert.pem --tlskey=.docker/machines/ipbox-production/key.pem stack deploy --compose-file docker-compose.production.yml ipbox_production --with-registry-auth --prune
+        run: docker stack deploy --with-registry-auth --prune --compose-file docker-compose.production.yml ipbox_production
 
       - name: Prune
-        run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-production/ca.pem --tlscert=.docker/machines/ipbox-production/cert.pem --tlskey=.docker/machines/ipbox-production/key.pem system prune -a -f
+        run: docker system prune -a -f
