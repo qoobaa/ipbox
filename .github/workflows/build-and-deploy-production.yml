@@ -1,0 +1,40 @@
+name: Build and deploy production
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Docker login
+        run: docker login -u qoobaa -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
+
+      - name: Build Docker image
+        run: docker build -t docker.pkg.github.com/qoobaa/ipbox/app:latest --build-arg BUNDLE_WITHOUT="development test" --build-arg FOLDERS_TO_REMOVE="test node_modules app/assets vendor/assets lib/assets tmp/cache .docker .github" --build-arg RAILS_ENV="production" --build-arg EXECJS_RUNTIME=Disabled .
+
+      - name: Push Docker image
+        run: docker push docker.pkg.github.com/qoobaa/ipbox/app:latest
+
+  deploy-production:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_REMOTE_HOST: tcp://51.83.254.158:2376
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Docker Login
+        run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-production/ca.pem --tlscert=.docker/machines/ipbox-production/cert.pem --tlskey=.docker/machines/ipbox-production/key.pem login -u qoobaa -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
+
+      - name: Deploy to Swarm
+        run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-production/ca.pem --tlscert=.docker/machines/ipbox-production/cert.pem --tlskey=.docker/machines/ipbox-production/key.pem stack deploy --compose-file docker-compose.production.yml ipbox_production --with-registry-auth --prune
+
+      - name: Prune
+        run: docker --tlsverify -H $DOCKER_REMOTE_HOST --tlscacert=.docker/machines/ipbox-production/ca.pem --tlscert=.docker/machines/ipbox-production/cert.pem --tlskey=.docker/machines/ipbox-production/key.pem system prune -a -f
