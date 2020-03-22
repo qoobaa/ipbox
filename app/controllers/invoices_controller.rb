@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action :assign_user, :assign_invoice
+  before_action :assign_user, :assign_invoices, :assign_invoice
 
   def index
     @invoices = @user.invoices.order(from: :asc)
@@ -35,6 +35,10 @@ class InvoicesController < ApplicationController
 
   def assign_user
     @user = current_user
+  end
+
+  def assign_invoice
+    @invoices = @user.invoices
   end
 
   def assign_invoice

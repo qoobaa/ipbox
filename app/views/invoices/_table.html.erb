@@ -27,7 +27,7 @@
           <%= Invoice.joins(:entries).sum("entries.hours") %>
         </th>
         <th class="text-right">
-          <%= number_to_percentage(Invoice.all.map(&:ratio).sum / Invoice.all.size * 100, precision: 0)  %>
+          <%= number_to_percentage(@invoices.map(&:ratio).sum / @invoices.size * 100, precision: 0)  %>
         </th>
       </tr>
     </tfoot>

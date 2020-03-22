@@ -39,6 +39,6 @@ class Entry < ApplicationRecord
   end
 
   def assign_invoice
-    self.invoice = Invoice.including_day(ended_at).first
+    self.invoice = user.invoices.including_day(ended_at).first
   end
 end
