@@ -27,14 +27,15 @@ jobs:
       DOCKER_HOST: tcp://51.83.254.158:2376
       DOCKER_TLS_VERIFY: 1
       DOCKER_CERT_PATH: .docker/machines/ipbox-production
-      DOCKER_USERNAME: qoobaa
-      DOCKER_PASSWORD: "${{ secrets.GITHUB_TOKEN }}"
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
       - name: Docker Login
         run: docker login -u qoobaa -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
+
+      - name: Docker Pull
+        run: docker-compose -f docker-compose.production.yml pull
 
       - name: Deploy to Swarm
         run: docker stack deploy --with-registry-auth --prune --resolve-image changed --compose-file docker-compose.production.yml ipbox_production
