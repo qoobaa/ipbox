@@ -20,6 +20,9 @@ jobs:
           registry: docker.pkg.github.com
           build_extra_args: --build-arg=RAILS_ENV=production
 
+      - name: Docker Login
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Push Docker image
         run: docker push ipbox/app:latest
 
@@ -35,7 +38,7 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Docker Login
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} docker.pkg.github.com
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Deploy to Swarm
         run: docker stack deploy --with-registry-auth --prune --compose-file docker-compose.production.yml ipbox_production
