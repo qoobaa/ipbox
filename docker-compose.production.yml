@@ -50,6 +50,8 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "nc -z 127.0.0.1 3000 || exit 1"]
       interval: "30s"
+    volumes:
+      - "app_data:/app/storage"
 
   sidekiq:
     <<: *app_base
@@ -90,6 +92,7 @@ services:
         constraints: [node.role == manager]
 
 volumes:
+  app_data:
   postgres_data:
   redis_data:
   caddy_data:
