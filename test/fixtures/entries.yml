@@ -1,9 +1,0 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  commited_at: 2020-02-17 10:36:55
-  message: MyText
-
-two:
-  commited_at: 2020-02-17 10:36:55
-  message: MyText
