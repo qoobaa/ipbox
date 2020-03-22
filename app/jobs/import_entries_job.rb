@@ -9,7 +9,7 @@ class ImportEntriesJob < ApplicationJob
       end
     end
     entries = Entry.create(attributes).select(&:valid?)
-    CalculateHoursJob.perform_now
+    CalculateHoursJob.perform_now(project.user)
     ActionCable.server.broadcast("imports-#{project.id}", entries: entries.size)
   end
 end
