@@ -30,13 +30,6 @@ services:
 
   app: &app_base
     image: "ipbox/app:latest"
-    build:
-      context: .
-      args:
-        FOLDERS_TO_REMOVE: "test node_modules app/assets vendor/assets lib/assets tmp/cache"
-        BUNDLE_WITHOUT: "development:test"
-        EXECJS_RUNTIME: "Disabled"
-        RAILS_ENV: "production"
     hostname: "app.ipbox.app"
     deploy:
       replicas: 2
