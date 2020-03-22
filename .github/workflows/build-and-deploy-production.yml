@@ -18,7 +18,7 @@ jobs:
           password: "${{ secrets.GITHUB_TOKEN }}"
           image_name: qoobaa/ipbox/app
           registry: docker.pkg.github.com
-          build_extra_args: --build-arg=RAILS_ENV=production --build-arg=EXECJS_RUNTIME=Disabled --build-arg=BUNDLE_WITHOUT=\'development test\' --build-arg=FOLDERS_TO_REMOVE=\'test node_modules app/assets vendor/assets lib/assets tmp/cache .docker .github\'
+          build_extra_args: --build-arg=RAILS_ENV=production --build-arg=EXECJS_RUNTIME=Disabled '--build-arg=BUNDLE_WITHOUT=development test' '--build-arg=FOLDERS_TO_REMOVE=test node_modules app/assets vendor/assets lib/assets tmp/cache .docker .github'
 
       # - name: Docker login
       #   run: docker login -u qoobaa -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
