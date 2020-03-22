@@ -7,7 +7,7 @@ ENV INSTALL_PATH=/app\
     SECRET_KEY_BASE=secret-key-base\
     RAILS_ENV=${RAILS_ENV}\
     RAILS_SERVE_STATIC_FILES=true\
-    BUNDLE_WITHOUT=development test
+    BUNDLE_WITHOUT="development test"
 
 RUN apk add --update --no-cache \
     build-base \
