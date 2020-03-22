@@ -33,10 +33,10 @@
         </div>
       </div>
       <div class="mr-1">
-        <%= form.collection_select :project_id_eq, Project.all, :id, :name, {include_blank: "Dowolny projekt"}, class: "form-control form-control-sm", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
+        <%= form.collection_select :project_id_eq, @projects, :id, :name, {include_blank: "Dowolny projekt"}, class: "form-control form-control-sm", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
       </div>
       <div class="mr-1">
-        <%= form.collection_select :invoice_id_eq, Invoice.all, :id, :number, {include_blank: "Dowolna faktura"}, class: "form-control form-control-sm", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
+        <%= form.collection_select :invoice_id_eq, @invoices, :id, :number, {include_blank: "Dowolna faktura"}, class: "form-control form-control-sm", autocomplete: "off", oninput: "Rails.fire(this.form, 'submit')" %>
       </div>
       <div class="mr-1">
         <%= form.submit "Filtruj", class: "btn btn-primary btn-sm btn-block" %>
