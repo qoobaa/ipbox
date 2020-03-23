@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
     if @project.entries.count > 0
       render body: "niepowodzenie: projekt zawiera wpisy\n"
     else
-      ImportEntriesJob.perform_later(@project, request.raw_post)
+      ImportEntriesJob.perform_later(@project, CGI.unescape(request.raw_post))
       render body: "sukces: zaimportowano wpisy\n"
     end
   end
