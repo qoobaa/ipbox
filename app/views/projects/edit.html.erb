@@ -11,7 +11,7 @@
 </p>
 
 <code>
-git log --author <%= @user.email %> --no-merges --after='2019-01-01 00:00:00' --before='2019-12-31 23:59:59' --pretty='format:%H %aI %s' | curl -X POST <%= import_project_url(@project.uuid) %> --data-binary @-
+git log --author <%= @user.email %> --no-merges --after='2019-01-01 00:00:00' --before='2019-12-31 23:59:59' --pretty='format:%H %aI %s' | curl -X POST <%= import_project_url(@project.uuid) %> --data-urlencode @-
 </code>
 
 <p class="my-3">
