@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>IP Box</title>
+    <title>IPBOX.app</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -12,7 +12,7 @@
   <body>
     <nav class="navbar navbar-expand navbar-light bg-light">
       <div class="container px-3">
-        <%= link_to "IP Box", root_path, class: "navbar-brand" %>
+        <%= link_to "IPBOX.app", root_path, class: "navbar-brand" %>
 
         <% if signed_in? %>
           <ul class="navbar-nav">
@@ -20,10 +20,10 @@
               <%= link_to "Projekty", projects_path, class: "nav-link #{'active' if controller_path.starts_with?('projects')}" %>
             </li>
             <li class="nav-item">
-              <%= link_to "Wpisy", entries_path, class: "nav-link #{'active' if controller_path.starts_with?('entries')}" %>
+              <%= link_to "Faktury", invoices_path, class: "nav-link #{'active' if controller_path.starts_with?('invoices')}" %>
             </li>
             <li class="nav-item">
-              <%= link_to "Faktury", invoices_path, class: "nav-link #{'active' if controller_path.starts_with?('invoices')}" %>
+              <%= link_to "Wpisy", entries_path, class: "nav-link #{'active' if controller_path.starts_with?('entries')}" %>
             </li>
           </ul>
         <% end %>
