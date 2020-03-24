@@ -15,10 +15,6 @@ test:
   <<: *default
   database: "ipbox_test"
 
-staging:
-  <<: *default
-  database: "ipbox_staging"
-
 production:
   <<: *default
   database: "ipbox_production"
