@@ -18,7 +18,7 @@
 
         <div class="form-group">
           <%= form.label :description, class: "form-label" %>
-          <%= form.text_field :description, class: "form-control", autocomplete: "off" %>
+          <%= form.text_area :description, class: "form-control", autocomplete: "off" %>
           <%= bootstrap_invalid_feedback_for(form.object, :description) %>
         </div>
 

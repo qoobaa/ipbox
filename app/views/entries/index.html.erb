@@ -52,11 +52,11 @@
 <%= render "update_entries_form", update_entries_form: @update_entries_form %>
 <%= render "table" %>
 
-<div class="row">
-  <div class="col">
+<div class="d-flex justify-content-between">
+  <div>
     <%= paginate @entries %>
   </div>
-  <div class="col text-right">
+  <div class="text-right">
     <%= link_to "javascript:void(0)", type: "button", class: "btn btn-warning", data: {toggle: "modal", target: "#new_update_entries_form"} do %>
       Zmień <%= t("entry_count", count: @entries.total_count) %>
     <% end %>
