@@ -4,7 +4,7 @@
     <span class="hover-only"><%= octicon "search" %></span>
   </td>
   <td>
-    <%= link_to entry.description, "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
+    <%= link_to truncate(entry.description, length: 50), "javascript:void(0)", data: {toggle: "modal", target: "#edit_entry_#{entry.id}"} %>
     <span class="hover-only"><%= octicon "pencil" %></span>
   </td>
   <td class="text-center">
