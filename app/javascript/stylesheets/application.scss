@@ -13,3 +13,7 @@ $primary: #525f7f;
 :hover + .hover-only {
     visibility: visible;
 }
+
+html, body {
+    height: 100%;
+}
