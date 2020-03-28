@@ -1,5 +1,8 @@
 @import "fonts";
 
+$fa-font-path: "~font-awesome/fonts";
+@import "font-awesome/scss/font-awesome";
+
 $font-size-base: 0.9rem !default;
 $font-family-base: 'Open Sans', sans-serif; // add this line first before importing bootstrap
 $primary: #525f7f;
