@@ -21,6 +21,7 @@ gem "rubyzip", require: "zip"
 gem "sass-rails"
 gem "sidekiq", require: ["sidekiq", "sidekiq/web"]
 gem "sprockets", "~> 3"
+gem "stripe"
 gem "turbolinks"
 gem "webpacker"
 

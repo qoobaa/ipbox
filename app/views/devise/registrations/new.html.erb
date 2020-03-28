@@ -1,30 +1,87 @@
-<h1><%= t('.sign_up') %></h1>
+<h1><%= t(".sign_up") %></h1>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= bootstrap_devise_error_messages! %>
+<% intent = Stripe::PaymentIntent.create(amount: 12177, currency: "pln",  capture_method: "manual") %>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {novalidate: "", data: {controller: "registration", registration_client_secret: intent.client_secret, registration_stripe_publishable_key: "pk_test_kJx1mo80aCNrvOnBm2EUXw0V00nlmshFep" }}) do |form| %>
+  <fieldset>
+    <div class="form-group">
+      <%= form.label :email %>
+      <%= form.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true %>
+      <%= bootstrap_invalid_feedback_for(form.object, :email) %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :password %>
+      <%= form.password_field :password, autocomplete: "current-password", class: "form-control", required: true %>
+
+      <% if @minimum_password_length %>
+        <small class="form-text text-muted"><%= t("devise.shared.minimum_password_length", count: @minimum_password_length) %></small>
+      <% end %>
+      <%= bootstrap_invalid_feedback_for(form.object, :password) %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :password_confirmation %>
+      <%= form.password_field :password_confirmation, autocomplete: "current-password", class: "form-control", required: true %>
+      <%= bootstrap_invalid_feedback_for(form.object, :password_confirmation) %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Dane do faktury</legend>
+
+    <div class="form-group">
+      <%= form.label :company_name %>
+      <%= form.text_field :company_name, class: "form-control", required: true %>
+      <%= bootstrap_invalid_feedback_for(form.object, :company_name) %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :address %>
+      <%= form.text_field :address, class: "form-control", required: true %>
+      <%= bootstrap_invalid_feedback_for(form.object, :address) %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :postal_code %>
+      <%= form.text_field :postal_code, class: "form-control", required: true, pattern: "[0-9][0-9]-[0-9][0-9][0-9]" %>
+      <small class="form-text text-muted">np. 00-001</small>
+      <%= bootstrap_invalid_feedback_for(form.object, :postal_code) %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :city %>
+      <%= form.text_field :city, class: "form-control", required: true %>
+      <%= bootstrap_invalid_feedback_for(form.object, :city) %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :vatin %>
+      <%= form.text_field :vatin, class: "form-control", required: true, pattern: "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" %>
+      <small class="form-text text-muted">np. 1234567819</small>
+      <%= bootstrap_invalid_feedback_for(form.object, :vatin) %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Płatność</legend>
+
+    <%= form.hidden_field :stripe_payment_intent_id, data: {target: "registration.paymentIntentId"} %>
+
+    <div class="form-group">
+      <label for="card-element">
+        Karta płatnicza
+      </label>
+      <div id="card-element" data-target="registration.card" class="form-control">
+      </div>
+      <small class="form-text text-danger" role="alert" data-target="registration.error">
+      </small>
+    </div>
+  </fieldset>
 
   <div class="form-group">
-    <%= f.label :email %>
-    <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :password %>
-    <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control' %>
-
-    <% if @minimum_password_length %>
-      <small class="form-text text-muted"><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></small>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.submit t('.sign_up'), class: 'btn btn-primary' %>
+    <%= form.submit t(".sign_up"), class: "btn btn-primary", data: {target: "registration.submit"} %>
   </div>
 <% end %>
 
-<%= render 'devise/shared/links' %>
+<%= render "devise/shared/links" %>
