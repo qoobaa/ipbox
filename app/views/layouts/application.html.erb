@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>IPBOX.app</title>
+    <title>IPBOX.app - tworzenie ewidencji IPBOX</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
 
-  <body>
+  <body class="d-flex flex-column">
     <nav class="navbar navbar-expand navbar-light bg-light">
       <div class="container px-3">
         <%= link_to "IPBOX.app", root_path, class: "navbar-brand" %>
@@ -47,17 +47,28 @@
       </div>
     </nav>
 
-    <div class="container my-3">
+    <main class="container flex-grow-1 py-3">
       <% flash.each do |type, message| %>
         <div class="alert alert-dismissible <%= bootstrap_class_for(type) %>" role="alert">
           <button class="close" data-dismiss="alert" aria-label="Zamknij">×</button>
           <%= message %>
         </div>
       <% end %>
-    </div>
 
-    <div class="container">
       <%= yield %>
-    </div>
+    </main>
+
+    <footer class="bg-dark text-light flex-shrink-0">
+      <div class="container py-3">
+        <div class="d-flex justify-content-between">
+          <div>
+            &copy; 2020 <a href="https://kubakuzma.com" target="_blank" class="text-light">Kuba Kuźma</a>
+          </div>
+          <div>
+            <a href="https://kubakuzma.com/#contact" class="text-light" target="_blank">Kontakt</a>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

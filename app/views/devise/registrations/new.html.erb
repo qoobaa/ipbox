@@ -2,7 +2,7 @@
 
 <% intent = Stripe::PaymentIntent.create(amount: 12177, currency: "pln",  capture_method: "manual") %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {data: {controller: "registration", registration_client_secret: intent.client_secret, registration_stripe_publishable_key: "pk_test_kJx1mo80aCNrvOnBm2EUXw0V00nlmshFep" }}) do |form| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {data: {controller: "registration", registration_client_secret: intent.client_secret, registration_stripe_publishable_key: ENV.fetch("STRIPE_PUBLISHABLE_KEY", "pk_test_kJx1mo80aCNrvOnBm2EUXw0V00nlmshFep") }}) do |form| %>
   <fieldset>
     <div class="form-group">
       <%= form.label :email %>
@@ -67,6 +67,12 @@
     <legend>Płatność</legend>
 
     <%= form.hidden_field :stripe_payment_intent_id, data: {target: "registration.paymentIntentId"} %>
+
+    <p>
+      Pełny dostęp do wszystkich funkcji aplikacji kosztuje <strong>99 zł netto</strong> (121,77
+      zł z VAT). Po zaksięgowaniu płatności, faktura zostanie
+      wysłana na adres e-mail podany w formularzu.
+    </p>
 
     <div class="form-group">
       <label for="card-element">
