@@ -2,7 +2,7 @@
   "name": "ipbox",
   "private": true,
   "dependencies": {
-    "@openfonts/open-sans_latin": "^1.44.0",
+    "@openfonts/open-sans_latin-ext": "^1.44.0",
     "@rails/actioncable": "^6.0.0-alpha",
     "@rails/activestorage": "^6.0.0-alpha",
     "@rails/ujs": "^6.0.0-alpha",
