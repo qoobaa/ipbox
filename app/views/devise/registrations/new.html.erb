@@ -2,7 +2,7 @@
 
 <% intent = Stripe::PaymentIntent.create(amount: 12177, currency: "pln",  capture_method: "manual") %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {novalidate: "", data: {controller: "registration", registration_client_secret: intent.client_secret, registration_stripe_publishable_key: "pk_test_kJx1mo80aCNrvOnBm2EUXw0V00nlmshFep" }}) do |form| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {data: {controller: "registration", registration_client_secret: intent.client_secret, registration_stripe_publishable_key: "pk_test_kJx1mo80aCNrvOnBm2EUXw0V00nlmshFep" }}) do |form| %>
   <fieldset>
     <div class="form-group">
       <%= form.label :email %>
@@ -74,6 +74,9 @@
       </label>
       <div id="card-element" data-target="registration.card" class="form-control">
       </div>
+      <% if form.object.stripe_payment_intent_id %>
+        <small class="form-text text-muted">Dane karty zostały już zapisane. Nie wpisuj ich ponownie, jeśli nie chcesz ich zmieniać.</small>
+      <% end %>
       <small class="form-text text-danger" role="alert" data-target="registration.error">
       </small>
     </div>
