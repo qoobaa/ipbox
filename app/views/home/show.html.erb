@@ -1,5 +1,5 @@
 <h1 class="text-center my-5">
-  Utwórz ewidencję wymaganą do skorzystania z ulgi IPBOX
+  Utwórz ewidencję IPBOX
 </h1>
 
 <div class="row my-5">
@@ -19,6 +19,30 @@
   </div>
 </div>
 
-<div class="text-center my-5 lead">
-  Zobacz <strong><%= link_to "przykładową ewidencję", "/climate-watch.pdf" %></strong> IPBOX.
-</div>
+<p class="text-center">
+  <%= link_to "/climate-watch.pdf", class: "btn btn-lg btn-success" do %>
+    Zobacz przykładową ewidencję
+  <% end %>
+</p>
+
+<h3>
+  Co to jest ulga IP Box?
+</h3>
+<p>
+  Ulga IP Box umożliwia preferencyjne opodatkowanie dochodów
+  związanych z działalnością badawczo-rozwojową podatkiem dochodowym
+  PIT lub CIT w wysokości 5%. W 2020 roku przedsiębiorcy mogą po raz
+  pierwszy skorzystać z ulgi podatkowej IP Box, która daje im prawo
+  rozliczyć dochody pozyskane w 2019 roku. Więcej o uldze IP Box
+  możesz przeczytać na <a href="https://www.gov.pl/web/rozwoj/ip-box" target="_blank">stronach Ministerstwa Rozwoju</a>.
+</p>
+
+<h3>
+  Dla kogo przeznaczona jest ta aplikacja?
+</h3>
+<p>
+  Aplikacja jest zaprojektowana z myślą o programistach i
+  programistkach prowadzących jednoosobową działalność gospodarczą,
+  która spełnia warunki określone w przepisach IP Box, rozliczających
+  się z klientem na podstawie stawki godzinowej.
+</p>
