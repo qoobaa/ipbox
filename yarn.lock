@@ -777,10 +777,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
-"@openfonts/open-sans_latin@^1.44.0":
+"@openfonts/open-sans_latin-ext@^1.44.0":
   version "1.44.0"
-  resolved "https://registry.yarnpkg.com/@openfonts/open-sans_latin/-/open-sans_latin-1.44.0.tgz#1142f9efe639f04dd565642559a917113e0d1590"
-  integrity sha512-rzk9JG55PKWpiNubPWVZYpigaFRYof82WacK5DNRwk3iZmtztBxgRge0ljcQyxQnH2BHz4kIaylb9YFpLPxFiw==
+  resolved "https://registry.yarnpkg.com/@openfonts/open-sans_latin-ext/-/open-sans_latin-ext-1.44.0.tgz#27c0aaa932d1170cac285db1f9fe7aeb552dfcda"
+  integrity sha512-oMeVF6+MaXyec20zPaRru0YMuS8he7eqgvCHh6F3+jD/2d/NlmHPi/6tR9Yxm5xPWpOCu+abigEuWPDXVdUH8A==
 
 "@rails/actioncable@^6.0.0-alpha":
   version "6.0.2"
