@@ -8,6 +8,8 @@ class User < ApplicationRecord
   validates :postal_code, presence: true, format: {with: /\A[0-9]{2}-[0-9]{3}\z/}
   validates :city, presence: true
   validates :vatin, presence: true
+  validates :tos_accepted, acceptance: true
+  validates :einvoice_accepted, acceptance: true
 
   has_many :projects, dependent: :destroy
   has_many :entries, dependent: :destroy

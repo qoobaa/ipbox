@@ -13,5 +13,6 @@ Rails.application.routes.draw do
       put :upload
     end
   end
+  get :tos, to: "home#tos"
   root to: "home#show"
 end

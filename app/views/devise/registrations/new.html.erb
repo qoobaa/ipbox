@@ -71,8 +71,7 @@
     <p>
       Za pełny dostęp do wszystkich funkcji aplikacji pobierana jest
       <strong>jednorazowa opłata</strong> w wysokości <strong>99 zł netto</strong> (121,77
-      zł z VAT). Po zaksięgowaniu płatności, faktura zostanie
-      wysłana na adres e-mail podany w formularzu.
+      zł z VAT).
     </p>
 
     <div class="form-group">
@@ -88,6 +87,22 @@
       </small>
     </div>
   </fieldset>
+
+  <div class="form-check my-3">
+    <%= form.check_box :tos_accepted, class: "form-check-input", required: true %>
+    <%= form.label :tos_accepted, class: "form-check-label" do %>
+      Przeczytałem i akceptuję <%= link_to "regulamin serwisu", tos_path, target: "_blank" %>
+    <% end %>
+    <%= bootstrap_invalid_feedback_for(form.object, :tos_accepted) %>
+  </div>
+
+  <div class="form-check my-3">
+    <%= form.check_box :einvoice_accepted, class: "form-check-input", required: true %>
+    <%= form.label :einvoice_accepted, class: "form-check-label" do %>
+      Wyrażam zgodę na przesłanie faktury drogą elektroniczną na adres e-mail podany w formularzu
+    <% end %>
+    <%= bootstrap_invalid_feedback_for(form.object, :einvoice_accepted) %>
+  </div>
 
   <div class="form-group">
     <%= form.submit t(".sign_up"), class: "btn btn-primary", data: {target: "registration.submit"} %>
