@@ -6,7 +6,7 @@ $fa-font-path: "~font-awesome/fonts";
 $font-size-base: 1rem;
 $font-family-base: 'Open Sans', sans-serif; // add this line first before importing bootstrap
 $font-weight-base: 300;
-//$primary: #525f7f;
+$primary: rgb(29,78,111);
 
 @import "~bootstrap/scss/bootstrap";
 
@@ -34,5 +34,18 @@ html, body {
     li:before {
         content: counters(item, ".") ".";
         counter-increment: item;
+    }
+}
+
+#home {
+    background-image: url('../../assets/images/background.jpg');
+    background-size: cover;
+
+    .overlay {
+        background: rgba(29,78,111,.80);
+    }
+
+    h1 {
+        font-size: 4rem;
     }
 }
