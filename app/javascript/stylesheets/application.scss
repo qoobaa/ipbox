@@ -41,6 +41,10 @@ html, body {
     background-image: url('../../assets/images/background.jpg');
     background-size: cover;
 
+    @media (min-width: 768px) {
+        height: 100%;
+    }
+
     .overlay {
         background: rgba(29,78,111,.80);
     }
