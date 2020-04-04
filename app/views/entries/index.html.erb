@@ -1,7 +1,3 @@
-<h2 class="my-3">
-  Wpisy
-</h2>
-
 <% if @invoice.present? %>
   <% invoiced_hours = @invoice.hours %>
   <% logged_hours = @invoice.entries.sum(:hours) %>
