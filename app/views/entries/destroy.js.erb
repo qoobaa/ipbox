@@ -4,6 +4,9 @@
 
   if (entryNode) {
     entryNode.parentNode.removeChild(entryNode);
+  } else {
+    Turbolinks.clearCache();
+    Turbolinks.visit(window.location);
   }
 
   jQuery(form).modal("hide");

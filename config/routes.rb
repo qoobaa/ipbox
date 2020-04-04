@@ -14,5 +14,10 @@ Rails.application.routes.draw do
     end
   end
   get :tos, to: "home#tos"
+
+  authenticated :user do
+    root to: "entries#index", as: :authenticated_root
+  end
+
   root to: "home#show"
 end
