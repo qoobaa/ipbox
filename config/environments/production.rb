@@ -60,6 +60,26 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "ipbox_production"
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "smtp.sendgrid.net",
+    port: 587,
+    domain: "ipbox.app",
+    user_name: Rails.application.secrets.sendgrid_username,
+    password: Rails.application.secrets.sendgrid_password,
+    authentication: "plain",
+    enable_starttls_auto: true
+  }
+
+  config.action_mailer.default_url_options = {
+    host: ENV["ACTION_MAILER_HOST"],
+    protocol: "https"
+  }
+
+  config.action_mailer.default_options = {
+    from: ENV["ACTION_MAILER_DEFAULT_FROM"]
+  }
+
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.

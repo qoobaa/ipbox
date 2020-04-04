@@ -1,69 +1,71 @@
-<h1 class="text-center my-5">
-  Tworzenie ewidencji IP Box
-</h1>
+<article class="my-5">
+  <h1 class="text-center">
+    Tworzenie ewidencji IP Box
+  </h1>
 
-<div class="row my-5">
-  <div class="col-md text-center">
-    <i class="my-3 fa fa-cloud-upload" style="font-size: 100px;"></i>
-    <h2 class="mb-4">Import</h2>
-    Błyskawicznie zaimportuj logi <strong>repozytoriów Git</strong> i <strong>kalendarze Google</strong>
+  <div class="row my-5">
+    <div class="col-md text-center">
+      <i class="my-3 fa fa-cloud-upload" style="font-size: 100px;"></i>
+      <h2 class="mb-4">Import</h2>
+      Błyskawicznie zaimportuj logi <strong>repozytoriów Git</strong> i <strong>kalendarze Google</strong>
+    </div>
+    <div class="col-md text-center">
+      <i class="my-3 fa fa-files-o" style="font-size: 100px;"></i>
+      <h2 class="mb-4">Faktury</h2>
+      Dodaj listę dokumentów księgowych podlegających uldze IP
+      Box. Zaimportowane wpisy zostaną <strong>automatycznie przypisane</strong> do
+      twoich faktur
+    </div>
+    <div class="col-md text-center">
+      <i class="my-3 fa fa-edit" style="font-size: 100px;"></i>
+      <h2 class="mb-4">Przegląd i edycja</h2>
+      Przeglądaj i edytuj wpisy, pojedynczo lub grupowo. W prosty sposób zmieniaj <strong>typ aktywności</strong> poszczególnych wpisów
+    </div>
   </div>
-  <div class="col-md text-center">
-    <i class="my-3 fa fa-files-o" style="font-size: 100px;"></i>
-    <h2 class="mb-4">Faktury</h2>
-    Dodaj listę dokumentów księgowych podlegających uldze IP
-    Box. Zaimportowane wpisy zostaną <strong>automatycznie przypisane</strong> do
-    twoich faktur
-  </div>
-  <div class="col-md text-center">
-    <i class="my-3 fa fa-edit" style="font-size: 100px;"></i>
-    <h2 class="mb-4">Przegląd i edycja</h2>
-    Przeglądaj i edytuj wpisy, pojedynczo lub grupowo. W prosty sposób zmieniaj <strong>typ aktywności</strong> poszczególnych wpisów
-  </div>
-</div>
 
-<p class="text-center my-5">
-  <%= link_to "/climate-watch.pdf", class: "btn btn-lg btn-success" do %>
-    Zobacz przykładową ewidencję
-  <% end %>
-</p>
+  <p class="text-center my-5">
+    <%= link_to "/climate-watch.pdf", class: "btn btn-lg btn-success" do %>
+      Zobacz przykładową ewidencję
+    <% end %>
+  </p>
 
-<h3 class="mt-4">
-  Czym jest ulga IP Box?
-</h3>
-<p>
-  Ulga IP Box umożliwia preferencyjne opodatkowanie dochodów
-  związanych z działalnością badawczo-rozwojową podatkiem dochodowym
-  PIT w wysokości 5%. W 2020 roku przedsiębiorcy mogą po raz
-  pierwszy skorzystać z ulgi podatkowej IP Box, która daje im prawo
-  rozliczyć dochody pozyskane w 2019 roku. Więcej o uldze IP Box
-  możesz przeczytać na <a href="https://www.gov.pl/web/rozwoj/ip-box" target="_blank">stronach Ministerstwa Rozwoju</a>.
-</p>
+  <h3 class="mt-4">
+    Czym jest ulga IP Box?
+  </h3>
+  <p>
+    Ulga IP Box umożliwia preferencyjne opodatkowanie dochodów
+    związanych z działalnością badawczo-rozwojową podatkiem dochodowym
+    PIT w wysokości 5%. W 2020 roku przedsiębiorcy mogą po raz
+    pierwszy skorzystać z ulgi podatkowej IP Box, która daje im prawo
+    rozliczyć dochody pozyskane w 2019 roku. Więcej o uldze IP Box
+    możesz przeczytać na <a href="https://www.gov.pl/web/rozwoj/ip-box" target="_blank">stronach Ministerstwa Rozwoju</a>.
+  </p>
 
-<h3 class="mt-4">
-  Dla kogo przeznaczona jest ta aplikacja?
-</h3>
-<p>
-  Aplikacja jest zaprojektowana z myślą o programistach i
-  programistkach prowadzących jednoosobową działalność gospodarczą,
-  która spełnia warunki określone w przepisach IP Box. Aplikacja
-  ułatwia tworzenie ewidencji w celu wyodrębnienia z faktur
-  kwalifikowanego dochodu IP (programowania) i pozostałej
-  działalności (np. tworzenia dokumentacji, zarządzania serwerami,
-  spotkaniami).
-</p>
+  <h3 class="mt-4">
+    Dla kogo przeznaczona jest ta aplikacja?
+  </h3>
+  <p>
+    Aplikacja jest zaprojektowana z myślą o programistach i
+    programistkach prowadzących jednoosobową działalność gospodarczą,
+    która spełnia warunki określone w przepisach IP Box. Aplikacja
+    ułatwia tworzenie ewidencji w celu wyodrębnienia z faktur
+    kwalifikowanego dochodu IP (programowania) i pozostałej
+    działalności (np. tworzenia dokumentacji, zarządzania serwerami,
+    spotkaniami).
+  </p>
 
-<h3 class="mt-4">
-  Jak działa aplikacja?
-</h3>
-<p>
-  Aplikacja IPBOX.app umożliwia zaimportowanie logów z wielu
-  repozytoriów Git i wielu kalendarzy Google do jednej bazy
-  danych. Każdy zaimportowany w ten sposób wpis posiada datę, opis,
-  typ aktywności (programowanie/utrzymanie) i szacowany (lub w
-  przypadku kalendarzy - dokładny) czas trwania. Informacje zawarte we
-  wpisach można w prosty sposób edytować. Wpisy są również
-  przyporządkowane wprowadzonym do aplikacji fakturom na podstawie
-  dat. Po przejrzeniu wpisów ewidencję należy wydrukować lub
-  wyeksportować do plików PDF.
-</p>
+  <h3 class="mt-4">
+    Jak działa aplikacja?
+  </h3>
+  <p>
+    Aplikacja IPBOX.app umożliwia zaimportowanie logów z wielu
+    repozytoriów Git i wielu kalendarzy Google do jednej bazy
+    danych. Każdy zaimportowany w ten sposób wpis posiada datę, opis,
+    typ aktywności (programowanie/utrzymanie) i szacowany (lub w
+    przypadku kalendarzy - dokładny) czas trwania. Informacje zawarte we
+    wpisach można w prosty sposób edytować. Wpisy są również
+    przyporządkowane wprowadzonym do aplikacji fakturom na podstawie
+    dat. Po przejrzeniu wpisów ewidencję należy wydrukować lub
+    wyeksportować do plików PDF.
+  </p>
+</article>
