@@ -13,6 +13,8 @@ export default class extends Controller {
       style: {
         base: {
           fontFamily: "Open Sans",
+          fontWeight: 300,
+          fontSize: "17px"
         }
       },
       hidePostalCode: true

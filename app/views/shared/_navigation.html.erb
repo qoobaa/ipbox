@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand navbar-light bg-light">
+  <div class="container px-3">
+    <%= link_to "IPBOX.app", root_path, class: "navbar-brand" %>
+
+    <% if signed_in? %>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <%= link_to "Projekty", projects_path, class: "nav-link #{'active' if controller_path.starts_with?('projects')}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Faktury", invoices_path, class: "nav-link #{'active' if controller_path.starts_with?('invoices')}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Wpisy", entries_path, class: "nav-link #{'active' if controller_path.starts_with?('entries')}" %>
+        </li>
+      </ul>
+    <% end %>
+
+    <ul class="navbar-nav ml-auto">
+      <% if signed_in? %>
+        <li class="nav-item">
+          <%= link_to current_user.email, edit_user_registration_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Wyloguj się", destroy_user_session_path, data: {method: :delete}, class: "nav-link" %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to "Zarejestruj się", new_user_registration_path, class: "nav-link" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
