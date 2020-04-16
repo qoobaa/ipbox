@@ -6,40 +6,40 @@
   </div>
 </div>
 
-<p>
-  Proszę wywołać następujące polecenie wewnątrz repozytorium
-  importowanego projektu (cała linia jako jedno polecenie):
-</p>
-
-<p>
-  <code>
-git log --author <%= @user.email %> --no-merges --after=2018-12-31 --before=2020-01-01 --pretty="format:%H %aI %s" | curl -X POST <%= import_project_url(@project.uuid) %> --data-urlencode @-
-  </code>
-</p>
-
-<p>
-  W razie problemów z importem sprawdź, czy adres email którego
-  użyłeś/użyłaś do rejestracji w serwisie pokrywa się z tym, którego
-  używasz w Git.
-</p>
-
-<p class="my-3">
-  lub
-</p>
-
-<%= form_for @project, url: upload_project_path(@project), html: {method: :put, remote: true} do |form| %>
-  <div class="form-group">
-    <%= form.label :file, "Załaduj kalendarz (zip)" %>
-    <%= form.file_field :file, class: "form-control-file", accept: "application/zip", oninput: "Rails.fire(this.form, 'submit')" %>
-  </div>
-<% end %>
-
-<p>
-  Plik <em>ZIP</em> można wyeksportować z <a href="https://calendar.google.com/calendar/r/settings/export" target="_blank">Kalendarza Google</a> w <em>Menu Ustawienia</em>&nbsp;&rarr;&nbsp;<em>Importuj/Eksportuj</em>&nbsp;&rarr;&nbsp;<em>Eksportuj</em>.
-</p>
-
 <div class="my-3" data-controller="imports" data-imports-project-id="<%= @project.id %>">
   <div data-target="imports.awaiting">
+    <p>
+      Proszę wywołać następujące polecenie wewnątrz repozytorium
+      importowanego projektu (cała linia jako jedno polecenie):
+    </p>
+
+    <p>
+      <code>
+git log --author <%= @user.email %> --no-merges --after=2018-12-31 --before=2020-01-01 --pretty="format:%H %aI %s" | curl -X POST <%= import_project_url(@project.uuid) %> --data-urlencode @-
+      </code>
+    </p>
+
+    <p>
+      W razie problemów z importem sprawdź, czy adres email którego
+      użyłeś/użyłaś do rejestracji w serwisie pokrywa się z tym, którego
+      używasz w Git.
+    </p>
+
+    <p class="my-3">
+      lub
+    </p>
+
+    <%= form_for @project, url: upload_project_path(@project), html: {method: :put, remote: true} do |form| %>
+      <div class="form-group">
+        <%= form.label :file, "Załaduj kalendarz (zip)" %>
+        <%= form.file_field :file, class: "form-control-file", accept: "application/zip", oninput: "Rails.fire(this.form, 'submit')" %>
+      </div>
+    <% end %>
+
+    <p>
+      Plik <em>ZIP</em> można wyeksportować z <a href="https://calendar.google.com/calendar/r/settings/export" target="_blank">Kalendarza Google</a> w <em>Menu Ustawienia</em>&nbsp;&rarr;&nbsp;<em>Importuj/Eksportuj</em>&nbsp;&rarr;&nbsp;<em>Eksportuj</em>.
+    </p>
+
     <%= button_tag class: "btn btn-success", disabled: true do %>
       <span class="spinner-border spinner-border-sm" role="status"></span>
       Oczekiwanie na wpisy…
