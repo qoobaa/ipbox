@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_many :entries, dependent: :destroy
   has_many :invoices, dependent: :destroy
 
-  after_create :capture
+  after_create :capture, :invoice
 
   private
 
@@ -34,5 +34,9 @@ class User < ApplicationRecord
 
     Stripe::PaymentIntent.update(stripe_payment_intent_id, customer: stripe_customer_id)
     Stripe::PaymentIntent.capture(stripe_payment_intent_id)
+  end
+
+  def invoice
+    IssueInvoiceJob.perform_later(self)
   end
 end

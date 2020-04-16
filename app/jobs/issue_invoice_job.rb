@@ -1,31 +1,47 @@
 class IssueInvoiceJob < ApplicationJob
-  def perform
-    uri = URI("https://kubakuzma.fakturownia.pl/invoices.json")
-    request = Net::HTTP::Post.new(uri, "Content-Type" => "application/json", "Accept" => "application/json")
+  Error = Class.new(StandardError)
 
-    request.body = {
-      api_token: "FJRZiIvwdUvp3129QkhB/kubakuzma",
+  def perform(user)
+    endpoint = "https://kubakuzma.fakturownia.pl/invoices.json"
+    uri = URI.parse(endpoint)
+
+    json_params = {
+      api_token: ENV.fetch("FAKTUROWNIA_API_TOKEN"),
       invoice: {
-        kind: "vat",
-	# number: nil,
-	sell_date: "2020-04-16",
-	# issue_date: "2020-04-16",
-	# payment_to: "2020-04-23",
-	# seller_name: "Seller SA",
-	# seller_tax_no: "5252445767",
-	buyer_name: "Client1 SA",
-	buyer_tax_no: "5252445767",
+	kind: "vat",
+	sell_date: user.created_at.to_date.to_s,
+        payment_to: user.created_at.to_date.to_s,
+        payment_type: "card",
+        paid: "121.77",
+	buyer_name: user.company_name,
+        buyer_post_code: user.postal_code,
+        buyer_city: "Warszawa",
+        buyer_street: user.address,
+        buyer_country: "PL",
+        buyer_email: user.email,
+	buyer_tax_no: user.vatin,
 	positions: [
 	  {
-            name: "Rejestracja w serwisie IPBOX.APP",
+            name: "Rejestracja w serwisie IPBOX.app",
             tax: 23,
             total_price_gross: 121.77,
             quantity: 1
-          }
-	]
-      }
-    }.to_json
+	  }
+        ]
+      }}
 
-    Net::HTTP.start(uri.hostname, uri.port) { |http| http.request(request) }
+    request = Net::HTTP::Post.new(uri.path)
+    request.body = JSON.generate(json_params)
+    request["Content-Type"] = "application/json"
+
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    response = http.start { |h| h.request(request) }
+
+    if response.code == "201"
+      JSON.parse(response.body)
+    else
+      raise Error, JSON.parse(response.body).dig("message")
+    end
   end
 end
