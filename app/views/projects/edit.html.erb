@@ -7,12 +7,21 @@
 </div>
 
 <p>
-  Proszę wywołać następujące polecenie wewnątrz repozytorium importowanego projektu:
+  Proszę wywołać następujące polecenie wewnątrz repozytorium
+  importowanego projektu (cała linia jako jedno polecenie):
 </p>
 
-<code>
-git log --author <%= @user.email %> --no-merges --after='2019-01-01 00:00:00' --before='2019-12-31 23:59:59' --pretty='format:%H %aI %s' | curl -X POST <%= import_project_url(@project.uuid) %> --data-urlencode @-
-</code>
+<p>
+  <code>
+git log --author <%= @user.email %> --no-merges --after=2018-12-31 --before=2020-01-01 --pretty="format:%H %aI %s" | curl -X POST <%= import_project_url(@project.uuid) %> --data-urlencode @-
+  </code>
+</p>
+
+<p>
+  W razie problemów z importem sprawdź, czy adres email którego użyłeś
+  do rejestracji w serwisie pokrywa się z tym, którego używasz w
+  Git.
+</p>
 
 <p class="my-3">
   lub
