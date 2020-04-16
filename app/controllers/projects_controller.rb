@@ -40,7 +40,7 @@ class ProjectsController < ApplicationController
 
   def upload
     @project = @user.projects.find(params[:id])
-    @project.update(file: params[:project][:file])
+    @project.update(file: params.dig(:project, :file))
     ImportCalendarJob.perform_later(@project)
     head :ok
   end
