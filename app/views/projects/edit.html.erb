@@ -21,7 +21,7 @@ git log --author <%= @user.email %> --no-merges --after='2019-01-01 00:00:00' --
 <%= form_for @project, url: upload_project_path(@project), html: {method: :put, remote: true} do |form| %>
   <div class="form-group">
     <%= form.label :file, "Załaduj kalendarz (zip)" %>
-    <%= form.file_field :file, class: "form-control-file", oninput: "Rails.fire(this.form, 'submit')" %>
+    <%= form.file_field :file, class: "form-control-file", accept: "application/zip", oninput: "Rails.fire(this.form, 'submit')" %>
   </div>
 <% end %>
 
