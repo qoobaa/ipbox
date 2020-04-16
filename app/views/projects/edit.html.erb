@@ -34,6 +34,10 @@ git log --author <%= @user.email %> --no-merges --after=2018-12-31 --before=2020
   </div>
 <% end %>
 
+<p>
+  Plik <em>ZIP</em> można wyeksportować z <a href="https://calendar.google.com/calendar/r/settings/export" target="_blank">Kalendarza Google</a> w <em>Menu Ustawienia</em>&nbsp;&rarr;&nbsp;<em>Importuj/Eksportuj</em>&nbsp;&rarr;&nbsp;<em>Eksportuj</em>.
+</p>
+
 <div class="my-3" data-controller="imports" data-imports-project-id="<%= @project.id %>">
   <div data-target="imports.awaiting">
     <%= button_tag class: "btn btn-success", disabled: true do %>
