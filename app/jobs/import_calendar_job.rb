@@ -17,6 +17,17 @@ class ImportCalendarJob < ApplicationJob
                     user_id: project.user_id
                   )
                 end
+              elsif event.dtend.nil?
+                Entry.create(
+                  exact: true,
+                  external_id: event.uid,
+                  ended_at: event.dtstart,
+                  hours: 8,
+                  description: event.summary,
+                  project_id: project.id,
+                  type: project.default_type,
+                  user_id: project.user_id
+                )
               else
                 hours = (event.dtend - event.dtstart) / 3600.0
                 hours = hours < 0.5 ? 0.5 : hours.round
