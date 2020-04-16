@@ -1,7 +1,7 @@
 class IssueInvoiceJob < ApplicationJob
   def perform
     uri = URI("https://kubakuzma.fakturownia.pl/invoices.json")
-    request = Net::HTTP::Post.new(uri, "Content-Type" => "application/json")
+    request = Net::HTTP::Post.new(uri, "Content-Type" => "application/json", "Accept" => "application/json")
 
     request.body = {
       api_token: "FJRZiIvwdUvp3129QkhB/kubakuzma",
