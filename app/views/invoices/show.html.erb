@@ -5,6 +5,7 @@
     </h2>
   </div>
   <div class="col d-print-none text-right">
+    <%= link_to "Eksportuj do CSV", invoice_path(format: :csv), class: "btn btn-info" %>
     <a href="javascript:window.print()" class="btn btn-info">Drukuj ewidencję</a>
   </div>
 </div>
