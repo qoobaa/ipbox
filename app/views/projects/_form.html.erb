@@ -22,7 +22,7 @@
 
         <div class="form-group">
           <%= form.label :default_type, class: "form-label" %>
-          <%= form.collection_select :default_type, Project.default_types.keys.map { |type| [type, t(type)] }, :first, :second, {prompt: true}, class: "form-control", autocomplete: "off" %>
+          <%= form.collection_select :default_type, Project.default_types.keys.map { |type| [type, t(type)] }, :first, :second, {prompt: true}, class: "form-control custom-select", autocomplete: "off" %>
           <small class="form-text text-muted">Wszystkie zaimportowane wpisy będą miały przypisany ten typ aktywności, będziesz mógł zmienić typ poszczególnych wpisów.</small>
           <%= bootstrap_invalid_feedback_for(form.object, :default_type) %>
         </div>
