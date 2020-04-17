@@ -1,0 +1,4 @@
+:schedule:
+  health_check:
+    every: "1m"
+    class: Scheduled::HealthCheckJob
