@@ -1,17 +1,9 @@
 class EntriesController < ApplicationController
   before_action :assign_user, :assign_projects, :assign_invoices
+  before_action :assign_entries, only: [:index, :update_all, :destroy_all]
 
   def index
     @entry = @user.entries.build
-    @unassigned_entries = @user.entries.by_year(2019).unassigned
-    @q = @user.entries.ransack(params[:q])
-    @projects = @user.projects
-    @entries =
-      @q.result
-        .includes(:invoice, :project)
-        .by_year(2019)
-        .page(params[:page])
-        .order(:ended_at, :id)
     @update_entries_form = UpdateEntriesForm.new(entries: @entries)
     invoice_ids = @entries.distinct.except(:limit, :offset, :order).pluck(:invoice_id)
     @invoice = Invoice.find_by(id: invoice_ids.first) if invoice_ids.size == 1
@@ -27,8 +19,6 @@ class EntriesController < ApplicationController
   end
 
   def update_all
-    @q = @user.entries.ransack(params[:q])
-    @entries = @q.result.by_year(2019)
     @update_entries_form = UpdateEntriesForm.new(update_entries_form_params)
     @update_entries_form.entries = @entries
     if @update_entries_form.valid?
@@ -38,9 +28,7 @@ class EntriesController < ApplicationController
   end
 
   def destroy_all
-    @projects = @user.projects
-    @q = @user.entries.ransack(params[:q])
-    @entries = @q.result.by_year(2019).except(:limit, :offset).destroy_all
+    @entries.destroy_all
     redirect_to entries_path(q: params.fetch(:q, {}).to_unsafe_hash)
   end
 
@@ -61,6 +49,16 @@ class EntriesController < ApplicationController
 
   def assign_invoices
     @invoices = @user.invoices
+  end
+
+  def assign_entries
+    @q = @user.entries.ransack(params[:q])
+    @entries =
+      @q.result
+        .includes(:invoice, :project)
+        .by_year(2019)
+        .page(params[:page])
+        .order(:ended_at, :id)
   end
 
   def entry_params

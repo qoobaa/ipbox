@@ -3,8 +3,12 @@ class UpdateEntriesForm
 
   attr_accessor :type, :entries, :hours, :description
 
-  validates :hours, inclusion: {in: [""] + (0...24).step(0.5).map(&:to_s)}
+  validates :hours, inclusion: {in: [nil] + (0...24).step(0.5).to_a}
   validates :type, inclusion: {in: ["", "maintenance", "development"]}
+
+  def hours=(hours)
+    @hours = hours.to_f if hours.present?
+  end
 
   def entries_count
     entries.respond_to?(:total_count) ? entries.total_count : entries.count
