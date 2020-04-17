@@ -1,4 +1,4 @@
-<%= form_for update_entries_form, url: update_all_entries_path(q: params.fetch(:q, {}).to_unsafe_h), html: {class: "modal", tabindex: -1, role: "dialog"}, data: {remote: true} do |form| %>
+<%= form_for update_entries_form, url: update_all_entries_path(q: params.fetch(:q, {}).to_unsafe_h), html: {class: "modal", tabindex: -1, role: "dialog", novalidate: ""}, data: {remote: true} do |form| %>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
