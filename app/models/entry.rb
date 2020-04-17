@@ -12,6 +12,7 @@ class Entry < ApplicationRecord
   validates :description, presence: true
   validates :hours, presence: true, inclusion: {in: (0...24).step(0.5).to_a}
   validates :ended_at, presence: true
+  validates :type, presence: true
 
   before_validation :assign_day, :assign_external_id
   before_save :assign_invoice
