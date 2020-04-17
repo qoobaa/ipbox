@@ -1,5 +1,6 @@
 require_relative 'boot'
 
+require 'csv'
 require 'rails/all'
 require_relative "../lib/middleware/import_content_type"
 
