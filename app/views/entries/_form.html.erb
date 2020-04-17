@@ -38,7 +38,7 @@
 
         <div class="form-group">
           <%= form.label :project_id, class: "form-label" %>
-          <%= form.collection_select :project_id, @projects, :id, :name, {prompt: true}, class: "form-control", autocomplete: "off" %>
+          <%= form.collection_select :project_id, @projects, :id, :name, {prompt: true}, class: "form-control custom-select", autocomplete: "off" %>
           <%= bootstrap_invalid_feedback_for(form.object, :project) %>
         </div>
 
