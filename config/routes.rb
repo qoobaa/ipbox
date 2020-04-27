@@ -19,5 +19,7 @@ Rails.application.routes.draw do
     root to: "entries#index", as: :authenticated_root
   end
 
+  resources :payu, only: [:create, :show]
+
   root to: "home#show"
 end

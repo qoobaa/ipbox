@@ -1,7 +1,7 @@
 class IssueInvoiceJob < ApplicationJob
   Error = Class.new(StandardError)
 
-  def perform(user)
+  def perform(user, type)
     endpoint = "https://kubakuzma.fakturownia.pl/invoices.json"
     uri = URI.parse(endpoint)
 
@@ -11,7 +11,7 @@ class IssueInvoiceJob < ApplicationJob
 	kind: "vat",
 	sell_date: user.created_at.to_date.to_s,
         payment_to: user.created_at.to_date.to_s,
-        payment_type: "card",
+        payment_type: type,
         paid: "121.77",
 	buyer_name: user.company_name,
         buyer_post_code: user.postal_code,
