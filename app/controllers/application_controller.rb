@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:company_name, :address, :postal_code, :city, :vatin, :stripe_payment_intent_id, :einvoice_accepted, :tos_accepted])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:company_name, :address, :postal_code, :city, :vatin, :payu_order_id, :stripe_payment_intent_id, :einvoice_accepted, :tos_accepted])
   end
 end

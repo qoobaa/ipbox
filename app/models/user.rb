@@ -1,3 +1,4 @@
+# coding: utf-8
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -10,16 +11,31 @@ class User < ApplicationRecord
   validates :vatin, presence: true
   validates :tos_accepted, acceptance: true
   validates :einvoice_accepted, acceptance: true
+  validate :payment_method, :payu_order_status
 
   has_many :projects, dependent: :destroy
   has_many :entries, dependent: :destroy
   has_many :invoices, dependent: :destroy
 
-  after_create :capture, :invoice
+  after_create :stripe_capture, :payu_capture, :issue_invoice
 
   private
 
-  def capture
+  def payu_order_status
+    return if payu_order_id.blank? || BlikRetrieveJob.perform_now(payu_order_id) == "WAITING_FOR_CONFIRMATION"
+
+    errors.add(:payment, "Płatność kodem Blik nie powiodła się")
+  end
+
+  def payu_capture
+    return if payu_order_id.blank?
+
+    BlikCaptureJob.perform_now(payu_order_id)
+  end
+
+  def stripe_capture
+    return if stripe_payment_intent_id.blank?
+
     customer = Stripe::Customer.create(
       name: company_name,
       email: email,
@@ -36,7 +52,14 @@ class User < ApplicationRecord
     Stripe::PaymentIntent.capture(stripe_payment_intent_id)
   end
 
-  def invoice
-    IssueInvoiceJob.perform_later(self)
+  def payment_method
+    return if stripe_payment_intent_id.present? || payu_order_id.present?
+
+    errors.add(:payment, "Proszę wybrać sposób płatności")
+  end
+
+  def issue_invoice
+    type = stripe_payment_intent_id ? "card" : "payu"
+    IssueInvoiceJob.perform_later(self, type)
   end
 end
