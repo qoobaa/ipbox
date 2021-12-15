@@ -1,8 +1,6 @@
 <h1><%= t(".sign_up") %></h1>
 
-<% intent = Stripe::PaymentIntent.create(amount: 12177, currency: "pln",  capture_method: "manual") %>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {data: {controller: "registration", registration_client_secret: intent.client_secret, registration_stripe_publishable_key: ENV.fetch("STRIPE_PUBLISHABLE_KEY", "pk_test_kJx1mo80aCNrvOnBm2EUXw0V00nlmshFep") }}) do |form| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |form| %>
   <fieldset>
     <div class="form-group">
       <%= form.label :email %>
@@ -26,115 +24,6 @@
       <%= bootstrap_invalid_feedback_for(form.object, :password_confirmation) %>
     </div>
   </fieldset>
-
-  <fieldset>
-    <legend>Dane do faktury</legend>
-
-    <div class="form-group">
-      <%= form.label :company_name %>
-      <%= form.text_field :company_name, class: "form-control", required: true %>
-      <%= bootstrap_invalid_feedback_for(form.object, :company_name) %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :address %>
-      <%= form.text_field :address, class: "form-control", required: true %>
-      <%= bootstrap_invalid_feedback_for(form.object, :address) %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :postal_code %>
-      <%= form.text_field :postal_code, class: "form-control", required: true, pattern: "[0-9][0-9]-[0-9][0-9][0-9]" %>
-      <small class="form-text text-muted">np. 00-001</small>
-      <%= bootstrap_invalid_feedback_for(form.object, :postal_code) %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :city %>
-      <%= form.text_field :city, class: "form-control", required: true %>
-      <%= bootstrap_invalid_feedback_for(form.object, :city) %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :vatin %>
-      <%= form.text_field :vatin, class: "form-control", required: true, pattern: "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" %>
-      <small class="form-text text-muted">np. 1234567819</small>
-      <%= bootstrap_invalid_feedback_for(form.object, :vatin) %>
-    </div>
-  </fieldset>
-
-  <fieldset>
-    <legend>Płatność</legend>
-
-    <%= form.hidden_field :stripe_payment_intent_id, data: {target: "registration.paymentIntentId"} %>
-    <%= form.hidden_field :payu_order_id, data: {target: "registration.orderId"} %>
-
-    <%= bootstrap_invalid_feedback_for(form.object, :payment) %>
-
-    <p>
-      Za pełny dostęp do wszystkich funkcji aplikacji pobierana jest
-      <strong>jednorazowa opłata</strong> w wysokości <strong>99 zł netto</strong> (121,77
-      zł z VAT)
-    </p>
-
-    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="pills-card-tab" data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-card" aria-selected="true">
-          Płatność kartą płatniczą
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="pills-blik-tab" data-toggle="pill" href="#pills-blik" role="tab" aria-controls="pills-blik" aria-selected="false">
-          Płatność kodem Blik
-        </a>
-      </li>
-    </ul>
-    <div class="tab-content" id="pills-tabContent">
-      <div class="tab-pane fade show active" id="pills-card" role="tabpanel" aria-labelledby="pills-card-tab">
-        <div class="form-group">
-          <label for="card-element">
-            Karta płatnicza
-          </label>
-          <div id="card-element" data-target="registration.card" class="form-control">
-          </div>
-          <% if form.object.stripe_payment_intent_id %>
-            <small class="form-text text-muted">Dane karty zostały już zapisane. Nie wpisuj ich ponownie, jeśli nie chcesz ich zmieniać</small>
-          <% end %>
-          <small class="form-text text-danger" role="alert" data-target="registration.cardError">
-          </small>
-        </div>
-      </div>
-      <div class="tab-pane fade" id="pills-blik" role="tabpanel" aria-labelledby="pills-blik-tab">
-        <div class="form-group">
-          <label for="blik">
-            Kod Blik
-          </label>
-          <input type="text" id="blik" class="form-control" data-target="registration.blik" placeholder="Kod Blik" pattern="[0-9]{6}" minlength="6" maxlength="6">
-          <% if form.object.payu_order_id %>
-            <small class="form-text text-muted">Kod blik został już zapisany. Nie wpisuj go ponownie jeśli nie chcesz go zmieniać</small>
-          <% end %>
-          <small class="form-text text-danger" role="alert" data-target="registration.blikError">
-          </small>
-        </div>
-      </div>
-    </div>
-  </fieldset>
-
-  <div class="form-check my-3">
-    <%= form.check_box :tos_accepted, class: "form-check-input", required: true %>
-    <%= form.label :tos_accepted, class: "form-check-label" do %>
-      Przeczytałem i akceptuję <%= link_to "regulamin serwisu", tos_path, target: "_blank" %>
-    <% end %>
-    <%= bootstrap_invalid_feedback_for(form.object, :tos_accepted) %>
-  </div>
-
-  <div class="form-check my-3">
-    <%= form.check_box :einvoice_accepted, class: "form-check-input", required: true %>
-    <%= form.label :einvoice_accepted, class: "form-check-label" do %>
-      Wyrażam zgodę na przesłanie faktury drogą elektroniczną na adres e-mail podany w formularzu
-    <% end %>
-    <%= bootstrap_invalid_feedback_for(form.object, :einvoice_accepted) %>
-  </div>
 
   <div class="form-group">
     <%= form.submit t(".sign_up"), class: "btn btn-primary", data: {target: "registration.submit"} %>

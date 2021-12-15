@@ -1,12 +1,13 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.6.5"
+ruby "3.0.3"
 
 # gem "bcrypt", "~> 3.1.7"
 # gem "image_processing", "~> 1.2"
 gem "backup"
 gem "devise"
+gem "hotwire-rails"
 gem "icalendar"
 gem "jbuilder"
 gem "kaminari"
@@ -23,8 +24,6 @@ gem "sass-rails"
 gem "sidekiq", require: ["sidekiq", "sidekiq/web"]
 gem "sidekiq-scheduler"
 gem "sprockets", "~> 3"
-gem "stripe"
-gem "turbolinks"
 gem "webpacker"
 
 gem "bootsnap", require: false

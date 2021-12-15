@@ -44,7 +44,7 @@ class InvoicesController < ApplicationController
   def assign_invoice
     @invoice = @user.invoices.build
     last_invoice = @user.invoices.order(to: :asc).last
-    @invoice.from = last_invoice&.to&.advance(days: 1) || "2020-01-01".to_date
+    @invoice.from = last_invoice&.to&.advance(days: 1) || "2021-01-01".to_date
     @invoice.to = @invoice.from.end_of_month
   end
 

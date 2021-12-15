@@ -14,16 +14,13 @@
   <thead>
     <tr>
       <th class="text-center">
-        Data
+        Date
       </th>
       <th class="text-center">
-        Opis
+        Description
       </th>
       <th class="text-center">
-        Typ
-      </th>
-      <th class="text-right">
-        Liczba godzin
+        Project
       </th>
     </tr>
   </thead>
@@ -37,9 +34,6 @@
                 <div>
                   <%= l day, format: "%A, %-d %B %Y" %>
                 </div>
-                <div>
-                  <%= entries.sum(&:hours) %> godzin
-                </div>
               </td>
             <% end %>
             <td>
@@ -48,70 +42,11 @@
               <span class="d-none d-print-block"><%= entry.description %></span>
             </td>
             <td class="text-center">
-              <% if entry.development? %>
-                programowanie
-              <% end %>
-              <% if entry.maintenance? %>
-                utrzymanie
-              <% end %>
-            </td>
-            <td class="text-right">
-              <%= entry.hours %>
+              <%= entry.project.name %>
             </td>
           </tr>
         <% end %>
       <% end %>
     <% end %>
   </tbody>
-  <tr>
-    <th rowspan="6" class="align-middle text-center">
-      Podsumowanie
-    </th>
-    <th class="text-right" colspan="2">
-      Liczba zafakturowanych godzin
-    </th>
-    <td class="text-right">
-      <%= @invoice.hours %>
-    </td>
-  </tr>
-  <tr>
-    <th class="text-right" colspan="2">
-      Liczba zaraportowanych godzin
-    </th>
-    <td class="text-right">
-      <%= @invoice.entries.sum(:hours) %>
-    </td>
-  </tr>
-  <tr>
-    <th class="text-right" colspan="2">
-      Liczba zaraportowanych godzin programowania
-    </th>
-    <td class="text-right">
-      <%= @invoice.entries.development.sum(:hours) %>
-    </td>
-  </tr>
-  <tr>
-    <th class="text-right" colspan="2">
-      Liczba zaraportowanych godzin utrzymania
-    </th>
-    <td class="text-right">
-      <%= @invoice.entries.maintenance.sum(:hours) %>
-    </td>
-  </tr>
-  <tr>
-    <th class="text-right" colspan="2">
-      Procent programowania
-    </th>
-    <td class="text-right">
-      <%= number_to_percentage(@invoice.ratio * 100, precision: 0) %>
-    </td>
-  </tr>
-  <tr>
-    <th class="text-right" colspan="2">
-      Procent utrzymania
-    </th>
-    <td class="text-right">
-      <%= number_to_percentage((1 - @invoice.ratio) * 100, precision: 0) %>
-    </td>
-  </tr>
 </table>

@@ -13,13 +13,6 @@ Rails.application.routes.draw do
       put :upload
     end
   end
-  get :tos, to: "home#tos"
 
-  authenticated :user do
-    root to: "entries#index", as: :authenticated_root
-  end
-
-  resources :payu, only: [:create, :show]
-
-  root to: "home#show"
+  root to: "entries#index"
 end

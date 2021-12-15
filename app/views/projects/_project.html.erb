@@ -4,11 +4,11 @@
     <span class="hover-only"><%= octicon "pencil" %></span>
   </td>
   <td class="text-center">
-    <%= link_to project.entries.by_year(2020).count, entries_path(q: {project_id_eq: project.id}) %>
+    <%= link_to project.entries.by_year(2021).count, entries_path(q: {project_id_eq: project.id}) %>
     <span class="hover-only"><%= octicon "search" %></span>
   </td>
   <td class="text-center">
-    <%= project.entries.by_year(2020).sum(:hours) %>
+    <%= project.entries.by_year(2021).sum(:hours) %>
   </td>
   <td class="text-right">
     <% if project.entries.empty? %>

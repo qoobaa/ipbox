@@ -4,7 +4,4 @@ class HomeController < ApplicationController
   def show
     render "show", layout: "landing"
   end
-
-  def tos
-  end
 end
