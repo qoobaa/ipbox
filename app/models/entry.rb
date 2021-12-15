@@ -21,10 +21,6 @@ class Entry < ApplicationRecord
     where(invoice_id: nil)
   end
 
-  def self.by_year(year)
-    where("day BETWEEN ? AND ?", "#{year}-01-01".to_date, "#{year}-12-31".to_date)
-  end
-
   def previous
     self.class.where("ended_at < ?", ended_at).order(ended_at: :asc).last
   end

@@ -19,7 +19,7 @@
         <% if entry.new_record? %>
           <div class="form-group">
             <%= form.label :ended_at, class: "form-label" %>
-            <%= form.date_field :ended_at, min: "2021-01-01", max: "2021-12-31", class: "form-control", autocomplete: "off" %>
+            <%= form.date_field :ended_at, class: "form-control", autocomplete: "off" %>
             <%= bootstrap_invalid_feedback_for(form.object, :ended_at) %>
           </div>
         <% end %>

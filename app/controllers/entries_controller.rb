@@ -56,7 +56,6 @@ class EntriesController < ApplicationController
     @entries =
       @q.result
         .includes(:invoice, :project)
-        .by_year(2021)
         .page(params[:page])
         .order(:ended_at, :id)
   end
