@@ -1,13 +1,14 @@
 import "../stylesheets/application";
 
 import "bootstrap/dist/js/bootstrap";
-import "@hotwired/turbo-rails";
+import Turbolinks from "turbolinks";
 import { Application } from "stimulus";
 import { definitionsFromContext } from "stimulus/webpack-helpers";
 import Rails from "@rails/ujs";
 import jQuery from "jquery";
 
 Rails.start();
+Turbolinks.start();
 window.Rails = Rails;
 window.jQuery = jQuery;
 

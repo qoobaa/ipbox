@@ -2,7 +2,6 @@
   "name": "ipbox",
   "private": true,
   "dependencies": {
-    "@hotwired/turbo-rails": "^7.1.0",
     "@openfonts/open-sans_latin-ext": "^1.44.2",
     "@rails/actioncable": "^6.1.4-3",
     "@rails/activestorage": "^6.1.4-3",
@@ -13,7 +12,8 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
-    "stimulus": "^3.0.1"
+    "stimulus": "^3.0.1",
+    "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
   "devDependencies": {
