@@ -21,13 +21,13 @@
           Suma
         </th>
         <th class="text-right">
-          <%= Invoice.sum(:hours) %>
+          <%= current_user.invoices.sum(:hours) %>
         </th>
         <th class="text-right">
-          <%= Invoice.joins(:entries).sum("entries.hours") %>
+          <%= current_user.invoices.joins(:entries).sum("entries.hours") %>
         </th>
         <th class="text-right">
-          <%= number_to_percentage(@invoices.map(&:ratio).sum / @invoices.size * 100, precision: 0)  %>
+          <%= number_to_percentage(@invoices.map(&:development_ratio).sum / @invoices.size * 100, precision: 0)  %>
         </th>
       </tr>
     </tfoot>

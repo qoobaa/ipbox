@@ -17,8 +17,16 @@ class Invoice < ApplicationRecord
     (from..to)
   end
 
-  def ratio
-    entries.development.sum(:hours) / hours
+  def development_ratio
+    entries.development.sum(:hours) / reported_hours
+  end
+
+  def maintenance_ratio
+    entries.maintenance.sum(:hours) / reported_hours
+  end
+
+  def reported_hours
+    entries.sum(:hours)
   end
 
   private

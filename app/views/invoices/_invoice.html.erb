@@ -12,7 +12,7 @@
     <%= invoice.entries.sum(:hours) %>
   </td>
   <td class="text-right">
-    <%= number_to_percentage(invoice.ratio * 100, precision: 0) %>
+    <%= number_to_percentage(invoice.development_ratio * 100, precision: 0) %>
   </td>
   <td class="text-right">
     <%= link_to "Ewidencja", invoice_path(invoice), class: "btn btn-sm btn-info" %>

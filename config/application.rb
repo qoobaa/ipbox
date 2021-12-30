@@ -13,8 +13,8 @@ module Ipbox
     config.load_defaults 6.1
 
     config.time_zone = "Europe/Warsaw"
-    config.i18n.default_locale = :en
-    config.i18n.available_locales = :en
+    config.i18n.default_locale = :pl
+    config.i18n.available_locales = :pl
     config.middleware.insert_before ActionDispatch::Executor, ::Middleware::ImportContentType
   end
 end
